@@ -7,12 +7,15 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     public int speed;
     bool isGrounded = true;
+    SpriteRenderer sr;
+    bool flip;
 
 
-	// Use this for initialization
-	void Start () {
-        rb = GetComponent<Rigidbody2D>();	
-	}
+    // Use this for initialization
+    void Start () {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -26,10 +29,19 @@ public class PlayerController : MonoBehaviour {
 
         rb.transform.Translate(new Vector2(moveHorizontal, 0.0f) * Time.deltaTime * speed);
 
-        if (isGrounded)
+        if (Input.GetKey(KeyCode.Space))
+            if (isGrounded)
+            {
+                rb.AddForce(transform.up * 5, ForceMode2D.Impulse);
+                isGrounded = false;
+            }
+        if (moveHorizontal > 0)
         {
-            //if (Input.GetKey(KeyCode.Space))
-                rb.AddForce(new Vector2(0, moveVertical) * 100);
+            sr.flipX = true;
+        }
+        else if(moveHorizontal < 0)
+        {
+            sr.flipX = false;
         }
         //rb.AddForce(new Vector2(moveHorizontal, moveVertical) * speed);
     }
@@ -41,12 +53,12 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("Enter");
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+  /*  void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = false;
         Debug.Log("Exit");
-    }
+    }*/
 
    /* void OnTriggerEnter(Collider other)
     {

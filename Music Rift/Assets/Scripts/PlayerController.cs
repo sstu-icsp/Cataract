@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space))
             if (isGrounded)
             {
-                rb.AddForce(transform.up * 5, ForceMode2D.Impulse);
+                rb.AddForce(transform.up * 7.2f, ForceMode2D.Impulse);
                 isGrounded = false;
             }
         if (moveHorizontal > 0)

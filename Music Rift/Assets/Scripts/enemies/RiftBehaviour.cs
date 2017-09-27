@@ -12,12 +12,14 @@ public class RiftBehaviour : MonoBehaviour
         animator = gameObject.GetComponentInParent<Animator>();
         animator.GetBehaviour<RiftIdleBehaviour>().behaviour = this;
         animator.GetBehaviour<RiftAttackBehaviour>().behaviour = this;
+        Debug.Log("Awake");
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
+            Debug.Log("Triggered");
             animator.SetBool("isPlayerDetected", true);
         }
     }

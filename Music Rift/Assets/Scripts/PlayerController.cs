@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class PlayerController : MonoBehaviour
     public Transform trE1;
     public Transform trS2;
     public Transform trE2;
-
+    [SerializeField]
+    GameObject fightPanel;
 
     void Start()
     {
@@ -67,4 +69,18 @@ public class PlayerController : MonoBehaviour
             || Physics2D.Linecast(new Vector2(transform.position.x, transform.position.y - 0.5f), new Vector2(transform.position.x - 1, transform.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) && move < 0;
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("col");
+        if (col.gameObject.tag == "Enemy")
+        {
+            Debug.Log("colsad");
+            fightPanel.GetComponent<FightPanel>().Exit();
+        }
+        if (col.gameObject.tag == "Exit")
+        {
+            Application.LoadLevel(Application.loadedLevel);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+        }
+    }
 }

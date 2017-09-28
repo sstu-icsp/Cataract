@@ -6,6 +6,8 @@ public class RiftBehaviour : MonoBehaviour
 {
 
     private Animator animator;
+    [SerializeField]
+    private GameObject fightPanel;
 
     void Awake()
     {
@@ -22,6 +24,15 @@ public class RiftBehaviour : MonoBehaviour
             Debug.Log("Triggered");
             animator.SetBool("isPlayerDetected", true);
         }
+    }
+
+    void OnCollider2DEnter(Collider2D col)
+    {
+        fightPanel.GetComponent<FightPanel>().Rift(gameObject.GetComponent<Collision2D>());
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+       
     }
 
     void OnTriggerExit2D(Collider2D other)

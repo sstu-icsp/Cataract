@@ -9,6 +9,7 @@ public class RiftAttackBehaviour : StateMachineBehaviour {
     private Transform thisTransform;
     private Transform playerTransform;
     private AudioSource player;
+    private Collider2D collider2D;
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         player = behaviour.GetComponent<AudioSource>();
@@ -16,11 +17,13 @@ public class RiftAttackBehaviour : StateMachineBehaviour {
         player.Play();
         thisTransform = behaviour.GetComponentInParent<Transform>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-	}
+        collider2D = behaviour.GetComponentInParent<Collider2D>();
+    }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         thisTransform.position += (playerTransform.position - thisTransform.position) / 30;
+        collider2D.transform.position += (playerTransform.position - thisTransform.position) / 30;
         if (!player.isPlaying)
             player.Play();
 	}

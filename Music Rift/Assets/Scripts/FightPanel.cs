@@ -16,6 +16,18 @@ public class FightPanel : MonoBehaviour {
         exitButton.onClick.AddListener(Exit);
     }
 
+    public void Fight(Collision2D col)
+    {
+        Destroy(col.gameObject);
+        Exit();
+    }
+
+    public void Rift(Collision2D col)
+    {   
+        Destroy(col.gameObject);
+        Exit();
+    }
+
     public void Exit()
     {
         pause = !pause;

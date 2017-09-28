@@ -75,12 +75,17 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Enemy")
         {
             Debug.Log("colsad");
-            fightPanel.GetComponent<FightPanel>().Exit();
+            fightPanel.GetComponent<FightPanel>().Fight(col);
         }
         if (col.gameObject.tag == "Exit")
         {
             Application.LoadLevel(Application.loadedLevel);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+        }
+        if (col.gameObject.tag == "Rift")
+        {
+            Debug.Log("colsad");
+            fightPanel.GetComponent<FightPanel>().Fight(col);
         }
     }
 }

@@ -10,6 +10,9 @@ public class FightPanel : MonoBehaviour {
     public Button exitButton;
     [SerializeField]
     private GameObject fightPanel;
+    [SerializeField]
+    private GameObject gameManager;
+
 
     void Awake()
     {
@@ -18,6 +21,7 @@ public class FightPanel : MonoBehaviour {
 
     public void Fight(Collision2D col)
     {
+
         Destroy(col.gameObject);
         Exit();
     }
@@ -38,6 +42,7 @@ public class FightPanel : MonoBehaviour {
         }
         else
         {
+            gameManager.GetComponent<GameManage>().AxisActivate();
             Time.timeScale = 1;
         }
     }

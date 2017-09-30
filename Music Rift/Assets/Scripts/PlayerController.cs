@@ -72,20 +72,13 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("col");
-        if (col.gameObject.tag == "Enemy")
+        switch (col.gameObject.tag)
         {
-            Debug.Log("colsad");
-            fightPanel.GetComponent<FightPanel>().Fight(col);
+            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col);break;
+            case "Exit" : Application.LoadLevel(Application.loadedLevel);break;
+            case "Rift" : fightPanel.GetComponent<FightPanel>().Fight(col);break;
+            case "Acid" : Application.LoadLevel(Application.loadedLevel); break;
         }
-        if (col.gameObject.tag == "Exit")
-        {
-            Application.LoadLevel(Application.loadedLevel);
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
-        }
-        if (col.gameObject.tag == "Rift")
-        {
-            Debug.Log("colsad");
-            fightPanel.GetComponent<FightPanel>().Fight(col);
-        }
+
     }
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using CnControls;
+using System;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Fightable
 {
     public float maxSpeed = 10f;
     public float jumpForce = 700f;
+    public AudioClip attackSound;
     bool facingRight = true;
     public bool grounded;
     Rigidbody2D rb;
@@ -22,8 +24,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject gameManager;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -77,14 +80,25 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("col");
         switch (col.gameObject.tag)
         {
-            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col);gameManager.GetComponent<GameManage>().AxisActivate(); break;
+            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col.gameObject.GetComponent<Fightable>());gameManager.GetComponent<GameManage>().AxisActivate(); break;
             case "Exit" : Application.LoadLevel(Application.loadedLevel);break;
-            case "Rift" : fightPanel.GetComponent<FightPanel>().Fight(col); gameManager.GetComponent<GameManage>().AxisActivate(); break;
             case "Acid" : Application.LoadLevel(Application.loadedLevel); break;
         }
 
+    }
+
+    public override void Attack(bool isDefended)
+    {
+        base.Attack(false);
+        AudioManager.instance.PlayEffect(attackSound);
+    }
+
+    public override void Die()
+    {
+        if (fightPanel.gameObject.active)
+            fightPanel.GetComponent<FightPanel>().TogglePause();
+        Application.LoadLevel(Application.loadedLevel);
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour{
+public class EnemyController : Fightable{
 
     public float maxSpeed = 10f;
     public float jumpForce = 700f;
@@ -14,10 +15,12 @@ public class EnemyController : MonoBehaviour{
     Vector3 startPosition;
 
     // Use this for initialization
-    void Start () {
+    new void Start()
+    {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
-	}
+    }
 
     void FixedUpdate()
     {
@@ -34,5 +37,10 @@ public class EnemyController : MonoBehaviour{
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public override void Die()
+    {
+        Destroy(gameObject);
     }
 }

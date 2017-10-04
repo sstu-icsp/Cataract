@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManage : MonoBehaviour {
 
     [SerializeField]
-    private GameObject joystick;
+    private GameObject GameInterface;
     [SerializeField]
-    private GameObject jumpButton;
+    private GameObject Player;
 
 
-    public void AxisActivate()
+
+    public void GameIntefaceActivate()
     {
-        joystick.SetActive(!joystick.activeSelf);
-        jumpButton.SetActive(!jumpButton.activeSelf);
+        GameInterface.SetActive(!GameInterface.activeSelf);
+    }
+
+    public void updateHealth(int h)
+    {
+        Player.GetComponent<PlayerStats>().setHealth(h);
     }
 }

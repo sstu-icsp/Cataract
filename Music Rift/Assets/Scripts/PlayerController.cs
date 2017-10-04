@@ -37,29 +37,28 @@ public class PlayerController : Fightable
 
         grounded = Physics2D.Linecast(trS1.position, trE1.position, 1 << LayerMask.NameToLayer("Ground")) 
             || Physics2D.Linecast(trS2.position, trE2.position, 1 << LayerMask.NameToLayer("Ground"));
-        Debug.DrawLine(trS1.position, trE1.position, Color.green);
+       /* Debug.DrawLine(trS1.position, trE1.position, Color.green);
         Debug.DrawLine(trS2.position, trE2.position, Color.green);
         Debug.DrawLine(transform.position, new Vector2(transform.position.x + 0.8f, transform.position.y + 0.5f), Color.green);
-        Debug.DrawLine(transform.position, new Vector2(transform.position.x - 0.8f, transform.position.y - 0.5f), Color.green);
+        Debug.DrawLine(transform.position, new Vector2(transform.position.x - 0.8f, transform.position.y - 0.5f), Color.green);*/
 
-        if(CnInputManager.GetButtonDown("Jump") && grounded)
+        if(CnInputManager.GetButton("Jump") && grounded)
         {
             rb.AddForce(new Vector2(0f, 700));
+            rb.velocity = new Vector2(0, 0);
         }
         /* if (grounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
          {
              rb.AddForce(new Vector2(0f, 700));
          }*/
-        if (wallCollision())
+       /* if (wallCollision())
         {
             move = 0;
-        }
+        }*/
         rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
 
-        if (move > 0 && !facingRight)
-            Flip();
-        else if (move < 0 && facingRight)
-            Flip();
+        if (move > 0 && !facingRight)Flip();
+        else if (move < 0 && facingRight)Flip();
     }
 
     void Flip()
@@ -82,7 +81,8 @@ public class PlayerController : Fightable
     {
         switch (col.gameObject.tag)
         {
-            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col.gameObject.GetComponent<Fightable>());gameManager.GetComponent<GameManage>().AxisActivate(); break;
+            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col.gameObject.GetComponent<Fightable>());
+                gameManager.GetComponent<GameManage>().GameIntefaceActivate(); break;
             case "Exit" : Application.LoadLevel(Application.loadedLevel);break;
             case "Acid" : Application.LoadLevel(Application.loadedLevel); break;
         }

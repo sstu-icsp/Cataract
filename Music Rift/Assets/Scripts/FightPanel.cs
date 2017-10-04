@@ -74,6 +74,7 @@ public class FightPanel : MonoBehaviour {
             defenceButton.gameObject.SetActive(false);
             enemy.Attack(isDefended);
         }
+        gameManager.GetComponent<GameManage>().updateHealth(player.CurrHealth);
         Debug.Log("Player: " + player.CurrHealth + " HP");
         Debug.Log("Enemy: " + enemy.CurrHealth + " HP");
     }
@@ -106,7 +107,7 @@ public class FightPanel : MonoBehaviour {
         }
         else
         {
-            gameManager.GetComponent<GameManage>().AxisActivate();
+            gameManager.GetComponent<GameManage>().GameIntefaceActivate();
             Time.timeScale = 1;
         }
     }

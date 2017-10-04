@@ -32,29 +32,16 @@ public class PlayerController : Fightable
 
     void FixedUpdate()
     {
-       // move = Input.GetAxis("Horizontal");
         move = CnInputManager.GetAxis("Horizontal");
 
         grounded = Physics2D.Linecast(trS1.position, trE1.position, 1 << LayerMask.NameToLayer("Ground")) 
             || Physics2D.Linecast(trS2.position, trE2.position, 1 << LayerMask.NameToLayer("Ground"));
-       /* Debug.DrawLine(trS1.position, trE1.position, Color.green);
-        Debug.DrawLine(trS2.position, trE2.position, Color.green);
-        Debug.DrawLine(transform.position, new Vector2(transform.position.x + 0.8f, transform.position.y + 0.5f), Color.green);
-        Debug.DrawLine(transform.position, new Vector2(transform.position.x - 0.8f, transform.position.y - 0.5f), Color.green);*/
-
         if(CnInputManager.GetButton("Jump") && grounded)
         {
             rb.AddForce(new Vector2(0f, 700));
             rb.velocity = new Vector2(0, 0);
         }
-        /* if (grounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)))
-         {
-             rb.AddForce(new Vector2(0f, 700));
-         }*/
-       /* if (wallCollision())
-        {
-            move = 0;
-        }*/
+
         rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
 
         if (move > 0 && !facingRight)Flip();
@@ -67,14 +54,6 @@ public class PlayerController : Fightable
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-    }
-
-    bool wallCollision()//check walls near with player
-    {
-        return Physics2D.Linecast(new Vector2(transform.position.x, transform.position.y + 0.5f), new Vector2(transform.position.x + 0.8f, transform.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) && move > 0
-            || Physics2D.Linecast(new Vector2(transform.position.x, transform.position.y + 0.5f), new Vector2(transform.position.x - 0.8f, transform.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) && move < 0
-            || Physics2D.Linecast(new Vector2(transform.position.x, transform.position.y - 0.5f), new Vector2(transform.position.x + 0.8f, transform.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) && move > 0
-            || Physics2D.Linecast(new Vector2(transform.position.x, transform.position.y - 0.5f), new Vector2(transform.position.x - 0.8f, transform.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) && move < 0;
     }
 
     void OnCollisionEnter2D(Collision2D col)

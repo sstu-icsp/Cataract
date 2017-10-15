@@ -19,6 +19,8 @@ public class FightPanel : MonoBehaviour {
     private float timeRemaining;
     private const float stateTime = 5;
     private bool isDefended;
+    public Text playerHP;
+    public Text enemyHP;
 
     void Awake()
     {
@@ -77,6 +79,8 @@ public class FightPanel : MonoBehaviour {
         gameManager.GetComponent<GameManage>().updateHealth(player.CurrHealth);
         Debug.Log("Player: " + player.CurrHealth + " HP");
         Debug.Log("Enemy: " + enemy.CurrHealth + " HP");
+        playerHP.text = "Player: " + player.CurrHealth + " HP";
+        enemyHP.text = "Enemy: " + enemy.CurrHealth + " HP";
     }
 
     public void Attack()

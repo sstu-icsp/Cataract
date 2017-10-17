@@ -19,8 +19,14 @@ public class FightPanel : MonoBehaviour {
     private float timeRemaining;
     private const float stateTime = 5;
     private bool isDefended;
+    private PlayerStats playerStats;
     public Text playerHP;
     public Text enemyHP;
+    public Text playerLevel;
+    public Text enemyLevel;
+    public Text playerDmg;
+    public Text enemyDmg;
+    private bool startHP = true;
 
     void Awake()
     {
@@ -36,6 +42,12 @@ public class FightPanel : MonoBehaviour {
         if (timeRemaining <= 0)
             ChangeState();
         if (enemy == null) TogglePause();
+        if (startHP == true)
+        {
+            playerHP.text = "Player: " + player.CurrHealth + " HP";
+            enemyHP.text = "Enemy: " + enemy.CurrHealth + " HP";
+            startHP = false;
+        }
     }
 
     public void Fight(Fightable enemy)

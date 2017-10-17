@@ -17,6 +17,18 @@ public class PlayerStats : MonoBehaviour {
     private int damage = 1;
     private int level = 0;
 
+    public int getHealth()
+    {
+        return health;
+    }
+    public int getLevel()
+    {
+        return level;
+    }
+    public int getDamage()
+    {
+        return damage;
+    }
 	public void setHealth(int h)
     {
         health = h;

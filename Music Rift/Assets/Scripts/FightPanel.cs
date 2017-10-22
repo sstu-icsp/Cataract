@@ -26,7 +26,6 @@ public class FightPanel : MonoBehaviour {
     public Text enemyLevel;
     public Text playerDmg;
     public Text enemyDmg;
-    private bool startHP = true;
 
     void Awake()
     {
@@ -36,22 +35,19 @@ public class FightPanel : MonoBehaviour {
         ignoreButton.onClick.AddListener(Ignore);
     }
 
+    //main cycle. Changes between states when state time is up. Resumes the game when enemy is dead
     void Update()
     {
         timeRemaining -= Time.deltaTime;
         if (timeRemaining <= 0)
             ChangeState();
         if (enemy == null) TogglePause();
-        if (startHP == true)
-        {
-            playerHP.text = "Player: " + player.CurrHealth + " HP";
-            enemyHP.text = "Enemy: " + enemy.CurrHealth + " HP";
-            startHP = false;
-        }
     }
 
+    //executed ONCE when the fight starts
     public void Fight(Fightable enemy)
     {
+        //initializing logic
         TogglePause();
         player.enemy = enemy;
         enemy.enemy = player;
@@ -68,7 +64,10 @@ public class FightPanel : MonoBehaviour {
             defenceButton.gameObject.SetActive(true);
         }
         timeRemaining = stateTime;
-        Debug.Log(currState); 
+
+        //initializing GUI
+        playerHP.text = "Player: " + player.CurrHealth + " HP";
+        enemyHP.text = "Enemy: " + enemy.CurrHealth + " HP";  
     }
 
     private void ChangeState()
@@ -95,23 +94,25 @@ public class FightPanel : MonoBehaviour {
         enemyHP.text = "Enemy: " + enemy.CurrHealth + " HP";
     }
 
+    //executed on player attack
     public void Attack()
     {
         player.Attack(false);
         ChangeState();
     }
 
+    //executed on player defence
     public void Defend()
     {
         isDefended = true;
         ChangeState();
     }
 
+    //executed on player ignore
     public void Ignore()
     {
         ChangeState();
     }
-
 
     public void TogglePause()
     {

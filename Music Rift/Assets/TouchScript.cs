@@ -13,8 +13,8 @@ public class TouchScript : MonoBehaviour
         {
             isTouch = true;
             touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
-            GameManage.instance.drawLazer(touchPosition);
-            GameManage.instance.DrawLine(touchPosition);
+            GameManager.instance.drawLazer(touchPosition);
+            GameManager.instance.DrawLine(touchPosition);
         }
         if (Input.GetMouseButtonUp(0))//Отслеживание нажатия на экран 
         {

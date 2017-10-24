@@ -7,7 +7,7 @@ using System;
 
 public class PlayerController : Fightable
 {
-    public float maxSpeed = 10f;
+    public float maxSpeed = 1f;
     public float jumpForce = 700f;
     public AudioClip attackSound;
     bool facingRight = true;

@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Class providing basic combat logic.
-/// contains useful methods Attack(), TakeDamage() and Die()
+/// Class providing basic combat logic:
+/// Health, Gameplay, damage
+/// ChangeHealth() and Die()
 /// </summary>
-public abstract class Fightable : MonoBehaviour {
+public abstract class Fightable : MonoBehaviour
+{
 
+    public Fightable enemy;
+    public FightGameplay Gameplay { get; set; }
+    public int CurrHealth { get; private set; }
+    public int Health { get; private set; }
+
+    private FightGameplay gameplay;
     [SerializeField]
-    private int health; 
+    private int health;
     [SerializeField]
     private int damage;
-    public Fightable enemy;
-    public int CurrHealth { get { return currHealth; } set { } }
     private int currHealth;
 
     public void Start()
@@ -19,20 +25,16 @@ public abstract class Fightable : MonoBehaviour {
         currHealth = health;
     }
 
-    public virtual void Attack(bool isDefended)
+    public virtual void ChangeHealth(int val)
     {
-        if(!isDefended)
-            enemy.TakeDamage(damage);
-    }
-
-    public virtual void TakeDamage(int damage)
-    {
-        currHealth -= damage;
+        currHealth -= val;
         if (currHealth <= 0)
         {
             currHealth = 0;
             Die();
         }
+        else if (currHealth > health)
+            currHealth = health;
     }
 
     public abstract void Die();

@@ -60,24 +60,17 @@ public class PlayerController : Fightable
     {
         switch (col.gameObject.tag)
         {
-            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col.gameObject.GetComponent<Fightable>());
-                gameManager.GetComponent<GameManage>().GameIntefaceActivate(); break;
+            case "Enemy": fightPanel.GetComponent<FightPanel>().Fight(col.gameObject.GetComponent<Fightable>());break;
             case "Exit" : Application.LoadLevel(Application.loadedLevel);break;
             case "Acid" : Application.LoadLevel(Application.loadedLevel); break;
         }
 
     }
 
-    public override void Attack(bool isDefended)
-    {
-        base.Attack(false);
-        AudioManager.instance.PlayEffect(attackSound);
-    }
-
     public override void Die()
     {
         if (fightPanel.gameObject.active)
-            fightPanel.GetComponent<FightPanel>().TogglePause();
+            GameManager.instance.TogglePause();
         Application.LoadLevel(Application.loadedLevel);
     }
 }

@@ -14,7 +14,11 @@ public class EnemyController : Fightable{
 
     Vector3 startPosition;
 
-    // Use this for initialization
+    void Awake()
+    {
+        Gameplay = new PitchMatchGameplay();
+    }
+
     new void Start()
     {
         base.Start();

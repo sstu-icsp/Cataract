@@ -16,7 +16,6 @@ public class GunButton : MonoBehaviour {
     virtual protected void ChoiceGun()
     {
         ChoiceGunPanel.SetActive(!ChoiceGunPanel.activeSelf);
-        
-       // gameObject.GetComponent<Button>().image.sprite = GameManage.instance.CurrentGun.sprite;
+        GameManager.instance.ChooseGun(gameObject.GetComponent<Button>().image.sprite);
     }
 }

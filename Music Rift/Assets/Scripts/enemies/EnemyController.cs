@@ -16,7 +16,7 @@ public class EnemyController : Fightable{
 
     void Awake()
     {
-        Gameplay = new PitchMatchGameplay();
+        Gameplay = new RhythmGameplay();
     }
 
     new void Start()

@@ -3,21 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
-   
+
     public static GameManager instance;
     [SerializeField]
     public Button GunButton;
     public Sprite[] images;
     public Gun[] guns;
+    public bool IsPaused { get { return isPaused; } private set { } }
 
+    [SerializeField]
+    private GameObject fightPanel;
     [SerializeField]
     private GameObject GameInterface;
     [SerializeField]
     private GameObject Player;
-    private bool pause = false;
+    private bool isPaused = false;
     private Gun currentGun;
+
+    public GameObject FightPanel
+    {
+        get
+        {
+            return fightPanel;
+        }
+
+        set
+        {
+            fightPanel = value;
+        }
+    }
 
     private GameManager() { }
 
@@ -46,33 +63,43 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void drawLazer(Vector3 touchPosition)
-    {
-        Debug.DrawLine(Player.transform.position, touchPosition, Color.red);
 
-        // Physics2D.Linecast(trS1.position, trE1.position, 1 << LayerMask.NameToLayer("Ground")) 
-    }
-    public void DrawLine(Vector3 start, float duration = 1f)
+    public void drawLazer(Vector3 end, float duration = 1f)
     {
         Color color = Color.red;
-        Vector3 end = new Vector3(Player.transform.position.x, Player.transform.position.y, start.z + 2);
+        Vector3 start = Player.transform.position;
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
+        end = new Vector3(end.x, end.y, Player.transform.position.z);
         myLine.AddComponent<LineRenderer>();
+        myLine.AddComponent<EdgeCollider2D>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
         lr.SetColors(color, Color.blue);
         lr.SetWidth(0.1f, 0.1f);
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-        GameObject.Destroy(myLine, duration);
+        RaycastHit2D hit = Physics2D.Raycast(start, end, Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) +
+           Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2)), 1 << LayerMask.NameToLayer("Enemy"));
+        if (hit.collider != null)
+        {
+            FightPanel.GetComponent<FightPanel>().Fight(hit.collider.gameObject.GetComponent<Fightable>());
+        }
+        Destroy(myLine, duration);
     }
+
+    public void ChooseGun(Sprite sprite)
+    {
+        currentGun.sprite = sprite;
+        GunButton.gameObject.GetComponent<Image>().sprite = currentGun.sprite;
+    }
+
 
     public void TogglePause()
     {
         GameInterface.SetActive(!GameInterface.activeSelf);
-        pause = !pause;
-        if (pause)
+        isPaused = !isPaused;
+        if (isPaused)
             Time.timeScale = 0;
         else
             Time.timeScale = 1;

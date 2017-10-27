@@ -63,7 +63,8 @@ public class FightPanel : MonoBehaviour
         FightGameplay.OnGFinished -= OnGameplayFinished;
         GameManager.instance.TogglePause();
         fightPanel.SetActive(!fightPanel.activeSelf);
-        enemy.Die();
+        if(enemy != null)
+            enemy.Die();
     }
  
     private enum state { attack, defence };

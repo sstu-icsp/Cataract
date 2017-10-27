@@ -10,7 +10,7 @@ class RhythmGameplay : FightGameplay
     private Beat[] beatSeqence = { new Beat(true, 200), new Beat(false, 200), new Beat(true, 200), new Beat(false, 200), new Beat(true, 200), new Beat(false, 200),
     new Beat(true, 500), new Beat(false, 200), new Beat(true, 500), new Beat(false, 200), new Beat(true, 500), new Beat(false, 200),
         new Beat(true, 200), new Beat(false, 200), new Beat(true, 200), new Beat(false, 200), new Beat(true, 200), new Beat(false, 200) };
-
+    private Beat[] beatAnswerSequence;
     private int currBeatInd;
     private float currTime;
     private AndroidJavaObject vibrator;
@@ -25,7 +25,6 @@ class RhythmGameplay : FightGameplay
         AndroidJavaObject vibrator = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
         unityPlayer.Dispose();
         currentActivity.Dispose();
-        state = 0;
     }
 
     public override void Init()
@@ -33,6 +32,7 @@ class RhythmGameplay : FightGameplay
         currBeatInd = 0;
         currTime = beatSeqence[0].Duration;
         state = 0;
+        beatAnswerSequence = new Beat[beatSeqence.Length];
     }
 
     public override void Update()
@@ -41,34 +41,71 @@ class RhythmGameplay : FightGameplay
         {
             case 0: //playing beat sequence
                 {
-                    playBeatSequence();
+                    PlayBeatSequence();
+                    if (currBeatInd == beatSeqence.Length - 1)
+                        state = 1;
                     break;
                 }
             case 1: //waiting for player tap 
                 {
-                    /*
-                    if(Input.touchCount > 0)
+                    if(Input.GetMouseButton(0))
                     {
-                       
-                    }*/
-                    state = 2;
+                        PitchController.instance.StartPlaying(1);
+                        currBeatInd = 0;
+                        currTime = 0;
+                        state = 2;
+                    }
+                    
                     break;
                 }
             case 2: //user input
                 {
-                    recordPlayerTaps();
+                    RecordPlayerTaps();
                     break;
                 }
             case 3: //calculate score based on taps and finish
                 {
-                    Finish(0);
+                    int score = CalculateScore();
+                    Finish(score);
                     break;
                 }
         }
     }
 
-    private void recordPlayerTaps()
+    private void PlayBeatSequence()
     {
+        if (beatSeqence[currBeatInd].Vibrate && !vibrated)
+        {
+            if (Application.platform == RuntimePlatform.Android)
+                vibrator.Call("vibrate", beatSeqence[currBeatInd].Duration);
+            PitchController.instance.PlayForDuration(1, beatSeqence[currBeatInd].Duration / 1000f);
+            // AudioManager.instance.PlayEffect()
+            vibrated = true;
+        }
+        if (currTime <= 0)
+        {
+            if (currBeatInd + 1 < beatSeqence.Length)
+                currTime = beatSeqence[++currBeatInd].Duration;
+            vibrated = false;
+        }
+        currTime -= Time.unscaledDeltaTime * 1000;
+    }
+
+    private void RecordPlayerTaps()
+    {
+        currTime += Time.unscaledDeltaTime;
+        if (Input.GetMouseButtonDown(0)){
+            PitchController.instance.StartPlaying(1);
+            beatAnswerSequence[currBeatInd++] = new Beat(false, (int)(currTime * 1000));
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            PitchController.instance.StopPlaying();
+            beatAnswerSequence[currBeatInd++] = new Beat(true, (int)(currTime * 1000));
+            currTime = 0;
+            if(currBeatInd == beatSeqence.Length - 1)
+                state = 3;
+        }
         /*
         switch (Input.GetTouch(0).phase)
         {
@@ -83,30 +120,17 @@ class RhythmGameplay : FightGameplay
                     break;
                 }
         }*/
-        state = 3;
     }
-
-    private void playBeatSequence()
+    private int CalculateScore()
     {
-        if (beatSeqence[currBeatInd].Vibrate && !vibrated)
-        {
-            if (Application.platform == RuntimePlatform.Android)
-                vibrator.Call("vibrate", beatSeqence[currBeatInd].Duration);
-            PitchController.instance.PlayForDuration(1, beatSeqence[currBeatInd].Duration / 1000f);
-            // AudioManager.instance.PlayEffect()
-            vibrated = true;
-        }
-        if (currTime <= 0)
-        {
+        int delta = 0, total = 4500;
 
-            if (currBeatInd + 1 < beatSeqence.Length)
-                currTime = beatSeqence[++currBeatInd].Duration;
-            vibrated = false;
+        for (int i = 0; i < beatSeqence.Length; i++) {
+            delta += Math.Abs(beatSeqence[i].Duration - beatAnswerSequence[i].Duration);
         }
-        currTime -= Time.unscaledDeltaTime * 1000;
-        if (currBeatInd == beatSeqence.Length - 1)
-            state = 1;
+        return (int)(20 * (delta / total - 0.5));
     }
+
 
     protected override void Finish(int result)
     {

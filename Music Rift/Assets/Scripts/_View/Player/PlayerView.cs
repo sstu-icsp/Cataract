@@ -32,4 +32,5 @@ public class PlayerView : Element {
     {
         Application.LoadLevel(Application.loadedLevel);
     }
+
 }

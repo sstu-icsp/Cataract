@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class RiftController : BaseEnemyController
 {
@@ -26,6 +27,15 @@ public class RiftController : BaseEnemyController
             animator.SetBool("isPlayerDetected", false);
         }
     }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            Debug.Log("Enemy");
+        }
+    }
+
 
     public override void Die()
     {

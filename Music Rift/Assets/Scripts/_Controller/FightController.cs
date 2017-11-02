@@ -20,7 +20,6 @@ public class FightController : Element
     {
         if (p_source == app.controller.gun)
         {
-
             GameObject gameObj = (GameObject)p_data[0];
             enemy = gameObj.GetComponent<BaseEnemyController>();
             if (UnityEngine.Random.Range(0, 10) < 8)//starts combat with 80% chance

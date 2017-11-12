@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GunController : Element
 {
     [SerializeField]
     private GunMode[] modes;
+    [SerializeField]
     public GunMode currMode;
 
     private GunView view;
@@ -24,7 +26,8 @@ public class GunController : Element
         {         
             startPos = app.view.player.gameObject.transform.position;
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
-            drawLaser();
+            if (!EventSystem.current.IsPointerOverGameObject())
+                drawLaser();
         }
     }
 

@@ -15,5 +15,11 @@ public class GameController : Element
             Time.timeScale = 1;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
+
    //TODO: NextLevel() PauseMenu() etc
 }

@@ -26,6 +26,7 @@ public class GunView : Element
     public void SetMode(int modeInd)
     {
         controller.SetMode(modeInd);
+        app.model.gunModel.CurrentGun = (sbyte)(modeInd - 1);
         ToggleModeSelectionPanel();
         gunRenderer.sprite = currentGunImage.sprite = controller.currMode.sprite;
         if (modeInd == 0)

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -26,7 +27,7 @@ public class GunController : Element
         {         
             startPos = app.view.player.gameObject.transform.position;
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (!IsPointerOverUIObject())
                 drawLaser();
         }
     }
@@ -59,6 +60,16 @@ public class GunController : Element
     {
         this.currentModeInd = currentModeInd;
         currMode = modes[currentModeInd];
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        Debug.Log(results.Count);
+        return results.Count > 0;
     }
 
 }

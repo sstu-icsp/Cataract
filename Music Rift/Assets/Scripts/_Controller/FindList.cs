@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FindList : MonoBehaviour {
+public class FindList : Element {
 
     public byte id;
     public string textList = "";
@@ -18,7 +18,8 @@ public class FindList : MonoBehaviour {
             textInfo.gameObject.SetActive(true);
             textInfo.getId(id);
             Debug.Log(textList + " " + id);
-            Time.timeScale = 0;
+            app.controller.game.TogglePause();
+            //Time.timeScale = 0;
         }
     }
 }

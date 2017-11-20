@@ -47,7 +47,7 @@ public class GunController : Element
 
     public void drawLaser()
     {
-        if (app.model.gunModel.CurrentGun == -1) return;
+        if (app.model.gunModel.CurrentGun == -1 || app.controller.game.IsPaused) return;
         FlipPlayer();
         RotateGun();    
         LazerSetup();

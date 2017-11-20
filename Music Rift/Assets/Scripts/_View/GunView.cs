@@ -39,7 +39,7 @@ public class GunView : Element
 
     public void ToggleModeSelectionPanel()
     {
-        modeSelectionPanel.SetActive(!modeSelectionPanel.activeSelf);
+        if(!app.controller.game.IsPaused)modeSelectionPanel.SetActive(!modeSelectionPanel.activeSelf);
     }
 
 }

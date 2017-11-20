@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextInfo : MonoBehaviour {
+public class TextInfo : Element {
 
     private string titleList = "блаблабла";
     private string textList = "туруру";
@@ -17,8 +17,8 @@ public class TextInfo : MonoBehaviour {
 
     void Close()
     {
-        Time.timeScale = 1;
-        this.gameObject.SetActive(false);
+        app.controller.game.TogglePause();
+        gameObject.SetActive(false);
     }
     public void getText()
     {

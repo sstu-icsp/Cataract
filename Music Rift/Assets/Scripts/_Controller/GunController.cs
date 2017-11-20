@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,13 +11,17 @@ public class GunController : Element
     [SerializeField]
     public GunMode currMode;
 
-    private GunView view;
+    private GunView gunView;
+    Gun gun;
     private int currentModeInd;
     private Vector2 startPos, currPos, endPos, dir;
+    private float timeLeft;
+    float angle;
+    private bool isRotated;
 
     void Awake()
     {
-        view = app.view.gun;
+        gunView = app.view.gun;
         SetMode(0);
     }
 
@@ -25,17 +30,43 @@ public class GunController : Element
    
         if ((Input.GetMouseButtonDown(0) || Input.touches.Any(x => x.phase == TouchPhase.Began)) && !app.controller.game.IsPaused)//Отслеживание нажатия на экран 
         {         
-            startPos = app.view.player.gameObject.transform.position;
+            startPos = app.model.gunModel.GunO.transform.position;
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
             if (!IsPointerOverUIObject())
                 drawLaser();
+        }
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            if(timeLeft <= 0)
+            {
+                rotateGunBack();
+            }
         }
     }
 
     public void drawLaser()
     {
         if (app.model.gunModel.CurrentGun == -1) return;
-        Gun gun = app.model.gunModel.guns[app.model.gunModel.CurrentGun];
+        FlipPlayer();
+        RotateGun();    
+        LazerSetup();
+        LazerCollide();      
+    }
+
+    private void LazerCollide()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(startPos, endPos, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
+           Mathf.Pow(endPos.y - startPos.y, 2)), 1 << LayerMask.NameToLayer("Enemy"));
+        if (hit.collider != null)
+        {
+            app.controller.events.OnCollision(this, hit.collider.gameObject);
+        }
+    }
+
+    private void LazerSetup()
+    {
+        gun = app.model.gunModel.guns[app.model.gunModel.CurrentGun];
         GameObject myLine = new GameObject();
         myLine.transform.position = startPos;
         myLine.AddComponent<LineRenderer>();
@@ -47,13 +78,37 @@ public class GunController : Element
         lr.endWidth = gun.endWidth;
         lr.SetPosition(0, new Vector3(startPos.x, startPos.y, -5));
         lr.SetPosition(1, new Vector3(endPos.x, endPos.y, -5));
-        RaycastHit2D hit = Physics2D.Raycast(startPos, endPos, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
-           Mathf.Pow(endPos.y - startPos.y, 2)), 1 << LayerMask.NameToLayer("Enemy"));
-        if (hit.collider != null)
+        Destroy(myLine, 0.5f);
+    }
+
+    private void RotateGun()
+    {
+        startPos = app.model.gunModel.GunO.transform.position;
+        rotateGunBack();
+        angle = (float)(Math.Atan((endPos.y - startPos.y) / (endPos.x - startPos.x))) * Mathf.Rad2Deg;
+        if (!app.model.player.facingRight) angle = -angle;
+        app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, angle));
+        timeLeft = 0.5f;//awful!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! one more feature =) 
+        isRotated = true;
+    }
+
+    void rotateGunBack()
+    {
+        if (isRotated)
         {
-            app.controller.events.OnCollision(this, hit.collider.gameObject);
+            app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, -angle));
+            isRotated = false;
         }
-        Destroy(myLine, 1f);
+    }
+
+    private void FlipPlayer()
+    {
+        startPos = app.model.gunModel.GunO.transform.position;
+        Debug.Log(app.model.player.playerObject.transform.position.x + "/" + endPos.x);
+        if(app.model.player.facingRight && app.model.player.playerObject.transform.position.x > endPos.x)
+            app.controller.player.Flip();
+        else if(!app.model.player.facingRight && app.model.player.playerObject.transform.position.x < endPos.x)
+            app.controller.player.Flip();
     }
 
     public void SetMode(int currentModeInd)
@@ -68,7 +123,6 @@ public class GunController : Element
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        Debug.Log(results.Count);
         return results.Count > 0;
     }
 

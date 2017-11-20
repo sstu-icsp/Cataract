@@ -1,4 +1,6 @@
-﻿public class PlayerModel : Element
+﻿using UnityEngine;
+
+public class PlayerModel : Element
 {
     public int maxHealth;
     public float maxSpeed = 1f;
@@ -6,4 +8,5 @@
     public float jumpForce = 700f;
     public bool facingRight = true;
     public bool grounded;
+    public GameObject playerObject;
 }

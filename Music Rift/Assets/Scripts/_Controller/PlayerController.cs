@@ -53,7 +53,7 @@ public class PlayerController : Element
         app.view.ui.setHealth(model.health);
     }
 
-    void Flip()
+    public void Flip()
     {
         model.facingRight = !model.facingRight;
         Vector3 theScale = view.transform.localScale;

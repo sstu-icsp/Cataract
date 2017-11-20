@@ -81,14 +81,14 @@ public class GunController : Element
         Destroy(myLine, 0.5f);
     }
 
-    private void RotateGun()
+    private void RotateGun()//bad work when shoot to up or down direction
     {
         startPos = app.model.gunModel.GunO.transform.position;
         rotateGunBack();
         angle = (float)(Math.Atan((endPos.y - startPos.y) / (endPos.x - startPos.x))) * Mathf.Rad2Deg;
         if (!app.model.player.facingRight) angle = -angle;
         app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, angle));
-        timeLeft = 0.5f;//awful!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! one more feature =) 
+        timeLeft = 0.5f;
         isRotated = true;
     }
 

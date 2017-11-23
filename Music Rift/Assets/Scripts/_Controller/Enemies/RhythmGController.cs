@@ -1,22 +1,20 @@
 ﻿using System;
 using UnityEngine;
 
-public class RhythmGController : FightGameplay
+class RhythmGController : FightGameplay
 {
 
-    private float[] beatSeqence = { 0.5f, 0.25f, 0.5f, 0.25f, 0.5f };
+    private float[] beatSeqence = {0.5f, 0.25f, 0.5f, 0.25f, 0.5f };
     private float totalTime;
     private float[] beatAnswerSequence;
     private int currBeatInd;
     private float currTime, answerTime;
+    private AndroidJavaObject vibrator;
+    bool vibrated;
     private int state;
-    private RhythmGView view;
 
     public override void Init()
     {
-        view = app.view.rhythmG;
-        view.gameObject.SetActive(true);
-
         currBeatInd = 0;
         currTime = beatSeqence[0];
         state = 0;
@@ -24,7 +22,6 @@ public class RhythmGController : FightGameplay
         for (int i = 0; i < beatSeqence.Length; i++)
             totalTime += beatSeqence[i];
         AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
-        view.AnimateBeat();
     }
 
     public override void UpdateGameplay()
@@ -40,42 +37,25 @@ public class RhythmGController : FightGameplay
                 }
             case 1: //waiting for player tap 
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if(Input.GetMouseButton(0))
                     {
                         AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
-                        view.AnimateBeatInput(Input.mousePosition);
                         currBeatInd = 0;
                         currTime = 0;
                         answerTime = 0;
                         state = 2;
                     }
+                    
                     break;
                 }
             case 2: //user input
                 {
-                    currTime += Time.unscaledDeltaTime;
-                    answerTime += Time.unscaledDeltaTime;
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
-                        view.AnimateBeatInput(Input.mousePosition);
-                        beatAnswerSequence[currBeatInd++] = currTime;
-                        currTime = 0;
-                        if (currBeatInd == beatSeqence.Length - 1)
-                            state = 3;
-                    }
-                    if (answerTime > totalTime)
-                    {
-                        for (int i = currBeatInd; i < beatAnswerSequence.Length; i++)
-                            beatAnswerSequence[i] = 0;
-                        state = 3;
-                    }
+                    RecordPlayerTaps();
                     break;
                 }
             case 3: //calculate score based on taps and finish
                 {
                     int score = CalculateScore();
-                    view.gameObject.SetActive(false);
                     Finish(score);
                     break;
                 }
@@ -88,35 +68,49 @@ public class RhythmGController : FightGameplay
         {
             AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
             if (currBeatInd + 1 < beatSeqence.Length)
-            {
                 currTime = beatSeqence[++currBeatInd];
-                view.AnimateBeat();
-            }
+            vibrated = false;
         }
         currTime -= Time.unscaledDeltaTime;
     }
 
-    /*
-    switch (Input.GetTouch(0).phase)
+    private void RecordPlayerTaps()
     {
-        case TouchPhase.Began:
-            {
-                Debug.Log("Began");
-                break;
-            }
-        case TouchPhase.Ended:
-            {
-                Debug.Log("Ended");
-                break;
-            }
-    }*/
-
+        currTime += Time.unscaledDeltaTime;
+        answerTime += Time.unscaledDeltaTime;
+        if (Input.GetMouseButtonDown(0)){
+            AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
+            beatAnswerSequence[currBeatInd++] = currTime;
+            currTime = 0;
+            if(currBeatInd == beatSeqence.Length - 1)
+                state = 3;
+        }
+        if(answerTime > totalTime)
+        {
+            for (int i = currBeatInd; i < beatAnswerSequence.Length; i++)
+                beatAnswerSequence[i] = 0;
+                state = 3;
+        }
+        /*
+        switch (Input.GetTouch(0).phase)
+        {
+            case TouchPhase.Began:
+                {
+                    Debug.Log("Began");
+                    break;
+                }
+            case TouchPhase.Ended:
+                {
+                    Debug.Log("Ended");
+                    break;
+                }
+        }*/
+    }
     private int CalculateScore()
     {
         float delta = 0;
 
-        for (int i = 0; i < beatSeqence.Length; i++)
-        {
+        for (int i = 0; i < beatSeqence.Length; i++) {
             delta += Math.Abs(beatSeqence[i] - beatAnswerSequence[i]);
         }
         float ratio = (float)delta / totalTime;

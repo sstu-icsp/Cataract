@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,6 @@ public class FightController : Element
     private PlayerController player;
     private BaseEnemyController enemy;
     private UIView view;
-    private bool isFighting;
 
     void Awake()
     {
@@ -26,8 +24,9 @@ public class FightController : Element
             enemy = gameObj.GetComponent<BaseEnemyController>();
             if (UnityEngine.Random.Range(0, 10) < 8)//starts combat with 80% chance
             {
-                //app.controller.game.TogglePause();
-                view.AnimateFightStart();
+                app.controller.game.TogglePause();
+                view.ToggleFight();
+                enemy.gameplay.Init();
             }
             else
             {
@@ -35,23 +34,10 @@ public class FightController : Element
             }
         }
     }
-
-    public void StartFight()
-    {
-        enemy.gameplay.Init();
-        isFighting = true;
-    }
-
-    public void EndFight()
-    {
-        if (enemy != null)
-            enemy.Die();
-    }
-
     //main cycle. Changes between states when state time is up. Resumes the game when enemy is dead
     void Update()
     {
-        if (isFighting)
+        if (enemy != null)
             enemy.gameplay.UpdateGameplay();
     }
 
@@ -60,8 +46,10 @@ public class FightController : Element
     public void OnGameplayFinished(Element p_source, params object[] p_data)
     {
         player.ChangeHealth((int)p_data[0]);
-        view.AnimateFightEnd();
-        isFighting = false;    
+        app.controller.game.TogglePause();
+        view.ToggleFight();
+        if (enemy != null)
+            enemy.Die();
     }
 
 }

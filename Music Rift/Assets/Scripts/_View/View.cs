@@ -3,5 +3,4 @@
     public PlayerView player;
     public UIView ui;
     public GunView gun;
-    public RhythmGView rhythmG;
 }

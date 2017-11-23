@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using CnControls;
 using System;
+=======
+﻿using System;
+>>>>>>> parent of 0e27a02... Add rhythm minigame FE
 using UnityEngine;
 using UnityEngine.UI;
 

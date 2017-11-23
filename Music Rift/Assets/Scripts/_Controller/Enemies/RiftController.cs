@@ -24,7 +24,6 @@ public class RiftController : BaseEnemyController
         animator.GetBehaviour<RiftIdleBehaviour>().gameObject = gameObject;
         RiftAttackBehaviour attack = animator.GetBehaviour<RiftAttackBehaviour>();
         attack.controller = this;
-        gameplay = app.controller.rhythmG;
 
     }
 

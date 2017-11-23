@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : Element
@@ -21,5 +23,10 @@ public class GameController : Element
             Application.Quit();
     }
 
-   //TODO: NextLevel() PauseMenu() etc
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    //TODO: NextLevel() PauseMenu() etc
 }

@@ -19,6 +19,7 @@ public class EnemyController : BaseEnemyController
     {
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
+        gameplay = app.controller.rhythmG;
     }
 
     void FixedUpdate()

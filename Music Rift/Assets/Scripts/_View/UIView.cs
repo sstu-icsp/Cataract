@@ -1,9 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using CnControls;
 using System;
 =======
 ﻿using System;
 >>>>>>> parent of 0e27a02... Add rhythm minigame FE
+=======
+﻿using System;
+>>>>>>> parent of 74a183b... input
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +27,4 @@ public class UIView : Element
         playerHP.text = h.ToString();
     }
 
-    public void disableJoystick()
-    {
-        gameInterface.GetComponentInChildren<SimpleJoystick>().gameObject.SetActive(false);
-    }
 }

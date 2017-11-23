@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CnControls;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,4 +19,8 @@ public class UIView : Element
         playerHP.text = h.ToString();
     }
 
+    public void disableJoystick()
+    {
+        gameInterface.GetComponentInChildren<SimpleJoystick>().gameObject.SetActive(false);
+    }
 }

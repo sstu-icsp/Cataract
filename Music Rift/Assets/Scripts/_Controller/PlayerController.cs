@@ -6,12 +6,18 @@ public class PlayerController : Element
     private PlayerModel model;
     private PlayerView view;
     private float move;
+    bool isAndroid = false;
 
     void Awake()
     {
         model = app.model.player;
         view = app.view.player;
         EventsController.Collision += OnCollision;
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            isAndroid = true;
+            app.view.ui.disableJoystick();
+        }
     }
 
     private void OnCollision(Element p_source, object[] p_data)
@@ -29,8 +35,22 @@ public class PlayerController : Element
 
     void FixedUpdate()
     {
-        move = CnInputManager.GetAxis("Horizontal");
 
+        if (isAndroid)
+        {
+            if (Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2)
+            {
+                move = Input.acceleration.x * 2f;
+            }
+            else
+            {
+                move = 0;
+            }
+        }
+        else
+        {
+            move = CnInputManager.GetAxis("Horizontal");
+        }
         if (CnInputManager.GetButton("Jump"))
         {
             model.grounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))

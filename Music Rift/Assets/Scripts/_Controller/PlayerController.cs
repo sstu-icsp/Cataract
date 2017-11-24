@@ -40,7 +40,7 @@ public class PlayerController : Element
     {
         if (isAndroid)
         {
-            if (Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2)
+            if ((Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2) && !app.controller.fight.IsFighting)
             {
                 move = Input.acceleration.x * 2f;
             }

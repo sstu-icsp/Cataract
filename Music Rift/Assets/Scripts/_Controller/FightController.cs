@@ -10,6 +10,19 @@ public class FightController : Element
     private UIView view;
     private bool isFighting;
 
+    public bool IsFighting
+    {
+        get
+        {
+            return isFighting;
+        }
+
+        set
+        {
+            isFighting = value;
+        }
+    }
+
     void Awake()
     {
         player = app.controller.player;
@@ -39,7 +52,7 @@ public class FightController : Element
     public void StartFight()
     {
         enemy.gameplay.Init();
-        isFighting = true;
+        IsFighting = true;
     }
 
     public void EndFight()
@@ -51,7 +64,7 @@ public class FightController : Element
     //main cycle. Changes between states when state time is up. Resumes the game when enemy is dead
     void Update()
     {
-        if (isFighting)
+        if (IsFighting)
             enemy.gameplay.UpdateGameplay();
     }
 
@@ -61,7 +74,7 @@ public class FightController : Element
     {
         player.ChangeHealth((int)p_data[0]);
         view.AnimateFightEnd();
-        isFighting = false;    
+        IsFighting = false;    
     }
 
 }

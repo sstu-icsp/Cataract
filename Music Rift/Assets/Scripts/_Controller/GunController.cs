@@ -49,9 +49,9 @@ public class GunController : Element
     {
         if (app.model.gunModel.CurrentGun == -1 || app.controller.game.IsPaused) return;
         FlipPlayer();
-        RotateGun();    
-        LazerSetup();
-        LazerCollide();      
+        LazerCollide();
+        RotateGun();
+        LazerSetup(); 
     }
 
     private void LazerCollide()
@@ -61,6 +61,12 @@ public class GunController : Element
         if (hit.collider != null)
         {
             app.controller.events.OnCollision(this, hit.collider.gameObject);
+        }
+        hit = Physics2D.Raycast(startPos, endPos, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
+           Mathf.Pow(endPos.y - startPos.y, 2)), 1 << LayerMask.NameToLayer("Ground"));
+        if (hit.collider != null)
+        {
+            endPos = hit.point;/// fix it
         }
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour {
+public class Gun {
     public float startWidth = 0;
     public float endWidth = 0; 
 

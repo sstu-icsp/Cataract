@@ -7,7 +7,6 @@ public class PlayerController : Element
     private PlayerModel model;
     private PlayerView view;
     private float move;
-    private bool isGrounded;
     private bool isAndroid;
 
     void Awake()
@@ -32,6 +31,7 @@ public class PlayerController : Element
             {
                 case "Exit": app.controller.game.ReloadLevel(); break;
                 case "Acid": app.controller.game.ReloadLevel(); break;
+                case "Ground": model.isGrounded = true; break;
             }
         }
     }
@@ -56,12 +56,13 @@ public class PlayerController : Element
 
         if (CnInputManager.GetButton("Jump"))
         {
-            isGrounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))
-           || Physics2D.Linecast(view.trS2.position, view.trE2.position, 1 << LayerMask.NameToLayer("Ground"));
-            if (isGrounded)
+           // model.isGrounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))
+          // || Physics2D.Linecast(view.trS2.position, view.trE2.position, 1 << LayerMask.NameToLayer("Ground"));
+            if (model.isGrounded)
             {
                 view.rb.AddForce(new Vector2(0f, model.jumpForce));
                 view.rb.velocity = new Vector2(0, 0);
+                model.isGrounded = false;
             }
         }
 

@@ -110,7 +110,6 @@ public class GunController : Element
     private void FlipPlayer()
     {
         startPos = app.model.gunModel.GunO.transform.position;
-        Debug.Log(app.model.player.playerObject.transform.position.x + "/" + endPos.x);
         if(app.model.player.facingRight && app.model.player.playerObject.transform.position.x > endPos.x)
             app.controller.player.Flip();
         else if(!app.model.player.facingRight && app.model.player.playerObject.transform.position.x < endPos.x)

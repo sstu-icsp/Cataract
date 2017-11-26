@@ -8,4 +8,5 @@ public class PlayerModel : Element
     public float jumpForce = 700f;
     public bool facingRight = true;
     public GameObject playerObject;
+    public bool isGrounded;
 }

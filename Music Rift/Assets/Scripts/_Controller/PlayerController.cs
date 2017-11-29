@@ -56,8 +56,8 @@ public class PlayerController : Element
 
         if (CnInputManager.GetButton("Jump"))
         {
-           // model.isGrounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))
-          // || Physics2D.Linecast(view.trS2.position, view.trE2.position, 1 << LayerMask.NameToLayer("Ground"));
+            //model.isGrounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))
+           //|| Physics2D.Linecast(view.trS2.position, view.trE2.position, 1 << LayerMask.NameToLayer("Ground"));
             if (model.isGrounded)
             {
                 view.rb.AddForce(new Vector2(0f, model.jumpForce));

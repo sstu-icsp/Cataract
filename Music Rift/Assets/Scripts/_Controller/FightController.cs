@@ -39,7 +39,7 @@ public class FightController : Element
             enemy = gameObj.GetComponent<BaseEnemyController>();
             if (UnityEngine.Random.Range(0, 10) < 8)//starts combat with 80% chance
             {
-                app.controller.game.TogglePause();
+                //app.controller.game.TogglePause();
                 view.AnimateFightStart();
             }
             else

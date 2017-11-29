@@ -19,7 +19,7 @@ public class FindList : Element {
             textInfo.getId(id);
             Debug.Log(textList + " " + id);
             app.controller.game.TogglePause();
-            //Time.timeScale = 0;
+            Time.timeScale = 0;
         }
     }
 }

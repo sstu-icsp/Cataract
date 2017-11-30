@@ -11,6 +11,7 @@ public class FindList : Element {
     
 	void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("is");
         if (other.gameObject.GetComponent<PlayerView>())
         {
             gameObject.SetActive(false);
@@ -19,7 +20,7 @@ public class FindList : Element {
             textInfo.getId(id);
             Debug.Log(textList + " " + id);
             app.controller.game.TogglePause();
-            Time.timeScale = 0;
+           // Time.timeScale = 0;
         }
     }
 }

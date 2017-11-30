@@ -56,35 +56,26 @@ public class GunController : Element
 
     private void LazerCollide()
     {
-        /*RaycastHit2D hit = Physics2D.Raycast(startPos, endPos, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
-           Mathf.Pow(endPos.y - startPos.y, 2)), 1 << LayerMask.NameToLayer("Enemy"));
-        if (hit.collider != null)
-        {
-            app.controller.events.OnCollision(this, hit.collider.gameObject);
-        }
-        hit = Physics2D.Raycast(startPos, endPos, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
-           Mathf.Pow(endPos.y - startPos.y, 2)), 1 << LayerMask.NameToLayer("Ground"));
-        
-        Debug.DrawRay(startPos, endPos, Color.red, Mathf.Sqrt(Mathf.Pow(endPos.x - startPos.x, 2) +
-           Mathf.Pow(endPos.y - startPos.y, 2)));*/
-        RaycastHit2D h = Physics2D.Linecast(startPos, endPos);
+        RaycastHit2D[] h = Physics2D.LinecastAll(startPos, endPos);
         Debug.DrawLine(startPos, endPos, Color.red);
-        if (h.collider != null)
+        if (h.Length > 0)
         {
-            if (h.collider.tag == "Enemy")
+            if (h.Length > 1)
+                if (h[0].collider.tag == "Rift" && !h[1].collider.isTrigger)
+                {
+                    app.controller.events.OnCollision(this, h[0].collider.gameObject);
+                }
+            if (h[0].collider.tag == "Enemy")
             {
-                app.controller.events.OnCollision(this, h.collider.gameObject);
+                app.controller.events.OnCollision(this, h[0].collider.gameObject);
             }
-            if (h.collider.tag == "Ground")
+                if (h[0].collider.tag == "Ground")
             {
-                endPos = h.point;
+                endPos = h[0].point;
             }
         }
-            /* if (hit.collider != null)
-             {
-                 endPos = hit.point;/// fix it
-             }*/
-        }
+
+    }
 
     private void LazerSetup()
     {

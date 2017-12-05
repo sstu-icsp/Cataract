@@ -9,4 +9,5 @@ public class PlayerModel : Element
     public bool facingRight = true;
     public GameObject playerObject;
     public bool isGrounded;
+    public bool collectingList = false;
 }

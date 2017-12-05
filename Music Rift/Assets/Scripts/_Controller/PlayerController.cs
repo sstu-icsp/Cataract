@@ -79,6 +79,7 @@ public class PlayerController : Element
     {
         model.health = Mathf.Clamp(model.health + val, 0, model.maxHealth);
         app.view.ui.setHealth(model.health);
+       // app.view.amplirude.h = model.health;
     }
 
     public void Flip()

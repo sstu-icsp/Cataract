@@ -19,6 +19,7 @@ public class TextInfo : Element {
     {
         app.controller.game.TogglePause();
         gameObject.SetActive(false);
+        app.model.player.collectingList = false;
     }
     public void getText()
     {

@@ -9,18 +9,28 @@ public class FindList : Element {
     public GameObject interfaceList;
     private TextInfo textInfo;
     
-	void OnTriggerEnter2D(Collider2D other)
+	void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("is");
-        if (other.gameObject.GetComponent<PlayerView>())
+        if (app.model.player.collectingList) return;
+        if (other.gameObject.tag == "Player")
+        {
+            app.model.player.collectingList = true;
+            gameObject.SetActive(false);
+            textInfo = interfaceList.GetComponent<TextInfo>();
+            textInfo.gameObject.SetActive(true);
+            textInfo.getId(id);
+            app.controller.game.TogglePause();
+            return;
+        }
+        if(other.gameObject.tag == "Rift" && other.gameObject.GetComponent<RiftController>().PlayerDetected)
         {
             gameObject.SetActive(false);
             textInfo = interfaceList.GetComponent<TextInfo>();
             textInfo.gameObject.SetActive(true);
             textInfo.getId(id);
-            Debug.Log(textList + " " + id);
+           // Debug.Log(Time.timeScale);
             app.controller.game.TogglePause();
-           // Time.timeScale = 0;
+            Debug.Log(Time.timeScale);
         }
     }
 }

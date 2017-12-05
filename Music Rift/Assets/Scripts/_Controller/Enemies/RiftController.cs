@@ -9,6 +9,7 @@ public class RiftController : BaseEnemyController
     public float hitForce;
     public float throwBackForce;
     public AudioClip hitSound;
+    public bool PlayerDetected = false;
 
     [SerializeField]
     private Animator animator;
@@ -33,6 +34,7 @@ public class RiftController : BaseEnemyController
         if (other.gameObject.tag == "Player")
         {
             animator.SetBool("isPlayerDetected", true);
+            PlayerDetected = true;
         }
     }
 
@@ -41,6 +43,7 @@ public class RiftController : BaseEnemyController
         if (other.gameObject.tag == "Player")
         {
             animator.SetBool("isPlayerDetected", false);
+            PlayerDetected = false;
         }
     }
 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a20a4f1e4336f7f40947e96dab80e1b6
+timeCreated: 1512893606
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Mod Guitars
+  fontNames:
+  - Mod Guitars
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

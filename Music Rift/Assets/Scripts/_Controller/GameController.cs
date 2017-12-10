@@ -20,7 +20,7 @@ public class GameController : Element
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
+            SceneManager.LoadScene("MainMenu");
     }
 
     public void ReloadLevel()

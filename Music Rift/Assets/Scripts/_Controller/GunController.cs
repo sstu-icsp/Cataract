@@ -96,10 +96,14 @@ public class GunController : Element
 
     private void RotateGun()//bad work when shoot to up or down direction
     {
-        startPos = app.model.gunModel.GunO.transform.position;
         rotateGunBack();
         angle = (float)(Math.Atan((endPos.y - startPos.y) / (endPos.x - startPos.x))) * Mathf.Rad2Deg;
-        if (!app.model.player.facingRight) angle = -angle;
+        Debug.Log(angle);
+        if (!app.model.player.facingRight)
+        {
+            angle = -angle;
+        }
+        angle = CornerCompetition(angle);
         app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, angle));
         timeLeft = 0.5f;
         isRotated = true;
@@ -115,12 +119,12 @@ public class GunController : Element
     }
 
     private void FlipPlayer()
-    {
+    {   
+        if(app.model.player.facingRight && app.model.player.playerObject.transform.position.x >= endPos.x)
+            app.controller.player.Flip();
+        else if(!app.model.player.facingRight && app.model.player.playerObject.transform.position.x <= endPos.x)
+            app.controller.player.Flip();
         startPos = app.model.gunModel.GunO.transform.position;
-        if(app.model.player.facingRight && app.model.player.playerObject.transform.position.x > endPos.x)
-            app.controller.player.Flip();
-        else if(!app.model.player.facingRight && app.model.player.playerObject.transform.position.x < endPos.x)
-            app.controller.player.Flip();
     }
 
     public void SetMode(int currentModeInd)
@@ -138,4 +142,24 @@ public class GunController : Element
         return results.Count > 0;
     }
 
+    private float CornerCompetition(float angle)
+    {
+        if(startPos.y < endPos.y && angle < 0 && app.model.player.facingRight)
+        {
+            return 90 + (90 + angle);
+        }
+        if(startPos.y > endPos.y && angle > 0 && app.model.player.facingRight)
+        {
+            return -90 - (90 - angle);
+        }
+        if (startPos.y > endPos.y && angle > 0 && !app.model.player.facingRight)
+        {
+            return 90 + (90 + angle);
+        }
+        if (startPos.y < endPos.y && angle < 0 && !app.model.player.facingRight)
+        {
+            return -90 - (90 - angle);
+        }
+        return angle;
+    }
 }

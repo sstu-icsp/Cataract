@@ -76,6 +76,7 @@ public class RhythmGController : FightGameplay
                 {
                     int score = CalculateScore();
                     view.gameObject.SetActive(false);
+                    app.controller.game.TogglePause();
                     Finish(score);
                     break;
                 }

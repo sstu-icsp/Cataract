@@ -14,8 +14,9 @@ public class FindList : Element {
         if (app.model.player.collectingList) return;
         if (other.gameObject.tag == "Player")
         {
-            app.model.player.collectingList = true;
             gameObject.SetActive(false);
+            app.model.player.collectingList = true;
+            
             textInfo = interfaceList.GetComponent<TextInfo>();
             textInfo.gameObject.SetActive(true);
             textInfo.getId(id);
@@ -25,6 +26,7 @@ public class FindList : Element {
         if(other.gameObject.tag == "Rift" && other.gameObject.GetComponent<RiftController>().PlayerDetected)
         {
             gameObject.SetActive(false);
+            app.model.player.collectingList = true;
             textInfo = interfaceList.GetComponent<TextInfo>();
             textInfo.gameObject.SetActive(true);
             textInfo.getId(id);

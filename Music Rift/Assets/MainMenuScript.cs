@@ -13,4 +13,8 @@ public class MainMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+    public void HelpAndSettings()
+    {
+        SceneManager.LoadScene("HelpAndSettingsScene");
+    }
 }

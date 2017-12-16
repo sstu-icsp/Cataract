@@ -19,6 +19,7 @@ public class AudioManager : Element
     private int lastEfxIndex;
     private int size;
     private PitchController controller;
+    float volume = 1f;
 
     void Awake()
     {
@@ -30,6 +31,11 @@ public class AudioManager : Element
         }
         else if (instance != this)
             Destroy(gameObject);
+        efxSource = getEfxSource();
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            volume = PlayerPrefs.GetFloat("Volume");
+        }
     }
     public void PlayEffect(AudioClip clip)
     {
@@ -47,7 +53,7 @@ public class AudioManager : Element
         efxSource = getEfxSource();
         efxSource.pitch = randomPitch;
         efxSource.clip = clips[rIndex];
-        efxSource.Play();
+            efxSource.Play();
     }
 
     internal void PlayAtPitch(AudioClip beat, float v)

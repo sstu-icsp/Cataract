@@ -51,7 +51,7 @@ public class GunController : Element
         FlipPlayer();
         LazerCollide();
         RotateGun();
-        LazerSetup(); 
+        LazerSetup();
     }
 
     private void LazerCollide()

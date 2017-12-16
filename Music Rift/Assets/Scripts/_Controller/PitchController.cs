@@ -17,10 +17,16 @@ public class PitchController : Element
     private bool bFade;
     private enum State { fade_in, play_duration, play_to_pitch, fade_out, idle }
     private State state;
+    private float volume = 1f;
 
     void Start()
     {
         pitch = source.pitch;
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            volume = PlayerPrefs.GetFloat("Volume");
+        }
+
     }
 
     void Update()
@@ -91,7 +97,7 @@ public class PitchController : Element
         this.pitchMultiplayer = pitchMultiplayer;
         source.pitch = pitch + pitchMultiplayer;
         gameObject.SetActive(true);
-        source.volume = 1;
+            source.volume = 1;
         source.Play();
         state = State.idle;
     }
@@ -110,7 +116,7 @@ public class PitchController : Element
         this.pitchMultiplayer = pitchMultiplayer;
         source.pitch = pitch + pitchMultiplayer;
         gameObject.SetActive(true);
-        source.volume = 1;
+            source.volume = 1;
         t = 0;
         this.duration = duration;
         if (!source.isPlaying)
@@ -132,7 +138,7 @@ public class PitchController : Element
     {
         source.clip = clip;
         gameObject.SetActive(true);
-        source.volume = 1;
+            source.volume = 1;
         source.Play();
         this.pitchMultiplayer = pitchMultiplayer;
         state = State.play_to_pitch;

@@ -13,6 +13,7 @@ public class UIView : Element
 
     public void AnimateFightStart()
     {
+        if (gameInterface == null) return;
         gameInterface.SetActive(!gameInterface.activeSelf);
         fightInterface.SetActive(!fightInterface.activeSelf);
         Sequence fightAnim = DOTween.Sequence().SetUpdate(true);

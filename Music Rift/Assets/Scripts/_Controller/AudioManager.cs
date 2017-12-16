@@ -36,6 +36,22 @@ public class AudioManager : Element
         {
             volume = PlayerPrefs.GetFloat("Volume");
         }
+        if (volume == 0)
+        {
+            AudioListener.volume = 0;
+        }
+        else AudioListener.volume = 1;
+    }
+    void Start()
+    {
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            volume = PlayerPrefs.GetFloat("Volume");
+        }
+        if (volume == 0)
+        {
+            AudioListener.volume = 0;
+        }
     }
     public void PlayEffect(AudioClip clip)
     {

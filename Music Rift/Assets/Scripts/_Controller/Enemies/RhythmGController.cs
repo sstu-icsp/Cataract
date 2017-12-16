@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RhythmGController : FightGameplay
 {
-
+    public AudioClip beat;
     private float[] beatSeqence = { 0.5f, 0.25f, 0.5f, 0.25f, 0.5f };
     private float totalTime;
     private float[] beatAnswerSequence;
@@ -23,7 +23,7 @@ public class RhythmGController : FightGameplay
         beatAnswerSequence = new float[beatSeqence.Length];
         for (int i = 0; i < beatSeqence.Length; i++)
             totalTime += beatSeqence[i];
-        AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
+        AudioManager.instance.PlayAtPitch(beat, 0.8f);
         view.AnimateBeat();
     }
 
@@ -42,7 +42,7 @@ public class RhythmGController : FightGameplay
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
+                        AudioManager.instance.PlayEffect(beat);
                         view.AnimateBeatInput(Input.mousePosition);
                         currBeatInd = 0;
                         currTime = 0;
@@ -57,7 +57,7 @@ public class RhythmGController : FightGameplay
                     answerTime += Time.unscaledDeltaTime;
                     if (Input.GetMouseButtonDown(0))
                     {
-                        AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
+                        AudioManager.instance.PlayEffect(beat);
                         view.AnimateBeatInput(Input.mousePosition);
                         beatAnswerSequence[currBeatInd++] = currTime;
                         currTime = 0;
@@ -87,7 +87,7 @@ public class RhythmGController : FightGameplay
     {
         if (currTime <= 0)
         {
-            AudioManager.instance.PlayAtPitch(AudioManager.instance.beat, UnityEngine.Random.Range(0.25f, 1));
+            AudioManager.instance.PlayAtPitch(beat, 0.8f);
             if (currBeatInd + 1 < beatSeqence.Length)
             {
                 currTime = beatSeqence[++currBeatInd];

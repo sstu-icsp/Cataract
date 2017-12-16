@@ -97,7 +97,6 @@ public class PitchController : Element
         this.pitchMultiplayer = pitchMultiplayer;
         source.pitch = pitch + pitchMultiplayer;
         gameObject.SetActive(true);
-            source.volume = 1;
         source.Play();
         state = State.idle;
     }

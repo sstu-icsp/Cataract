@@ -5,19 +5,15 @@ using UnityEngine;
 public class RiftIdleBehaviour : StateMachineBehaviour {
 
     public AudioClip riftSound;
-    public GameObject gameObject;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-         AudioSource player = gameObject.GetComponent<AudioSource>();
-         player.clip = riftSound;
-      //  player.Play();
+     //   AudioManager.instance.PlayEffect(riftSound);
     }
 
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-       // gameObject.GetComponent<AudioSource>().Stop();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

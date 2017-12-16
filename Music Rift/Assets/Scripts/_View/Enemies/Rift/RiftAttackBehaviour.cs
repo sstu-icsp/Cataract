@@ -5,7 +5,6 @@ using UnityEngine;
 public class RiftAttackBehaviour : StateMachineBehaviour {
 
     public RiftController controller;
-    public AudioSource audio;
     public AudioClip attackSound;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

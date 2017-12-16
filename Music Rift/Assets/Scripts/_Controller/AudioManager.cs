@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AudioManager : Element
 {
 
     public float minPitch;
     public float maxPitch;
-
-    public AudioSource musicSource;
-    public AudioSource[] efxSources;
+    public float EfxVolume
+    {
+        get { return efxVolume; }
+        set { value = Mathf.Clamp01(value); efxVolume = value; foreach (AudioSource src in efxSources) src.volume = value; }
+    }
+    public float MusicVolume
+    {
+        get { return musicVolume; }
+        set { value = Mathf.Clamp01(value); musicVolume = value; musicSource.volume = value;}
+    }
     public static AudioManager instance;
-
-    public AudioClip beat;
-
+    public AudioClip music;
     private AudioSource efxSource;
     private int lastEfxIndex;
     private int size;
     private PitchController controller;
-    float volume = 1f;
+    private float efxVolume = 1f;
+    private float musicVolume = 1f;
+    [SerializeField]
+    private AudioSource musicSource;
+    [SerializeField]
+    private AudioSource[] efxSources;
 
     void Awake()
     {
@@ -32,67 +39,53 @@ public class AudioManager : Element
         else if (instance != this)
             Destroy(gameObject);
         efxSource = getEfxSource();
-        if (PlayerPrefs.HasKey("Volume"))
-        {
-            volume = PlayerPrefs.GetFloat("Volume");
-        }
-        if (volume == 0)
-        {
-            AudioListener.volume = 0;
-        }
-        else AudioListener.volume = 1;
     }
-    void Start()
-    {
-        if (PlayerPrefs.HasKey("Volume"))
-        {
-            volume = PlayerPrefs.GetFloat("Volume");
-        }
-        if (volume == 0)
-        {
-            AudioListener.volume = 0;
-        }
-    }
+
     public void PlayEffect(AudioClip clip)
     {
         efxSource = getEfxSource();
         efxSource.pitch = 1;
-        efxSource.volume = 1;
         efxSource.clip = clip;
         efxSource.Play();
     }
 
     public void PlayRandomSfx(params AudioClip[] clips)
     {
-        int rIndex = UnityEngine.Random.Range(0, clips.Length);
-        float randomPitch = UnityEngine.Random.Range(minPitch, maxPitch);
+        int rIndex = Random.Range(0, clips.Length);
+        float randomPitch = Random.Range(minPitch, maxPitch);
         efxSource = getEfxSource();
         efxSource.pitch = randomPitch;
         efxSource.clip = clips[rIndex];
-            efxSource.Play();
+        efxSource.Play();
     }
 
-    internal void PlayAtPitch(AudioClip beat, float v)
+    public void PlayAtPitch(AudioClip clip, float pitch)
     {
         efxSource = getEfxSource();
-        controller.PlayAtPitch(beat, efxSource, v);
+        controller.PlayAtPitch(clip, efxSource, pitch);
     }
 
-    public void SetMusic(AudioClip clip)
+    public void PlayMusic(AudioClip clip)
     {
-
-        if (musicSource.clip == null || musicSource.clip != null && musicSource.clip.name != clip.name)
-        {
-            musicSource.clip = clip;
-            musicSource.loop = true;
-            musicSource.Play();
-        }
-
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
     }
 
     public void StopMusic()
     {
         musicSource.Stop();
+    }
+
+    public void ToggleMusicMute()
+    {
+        musicSource.mute = !musicSource.mute;
+    }
+
+    public void ToggleEffectsMute()
+    {
+        foreach(AudioSource src in efxSources)
+            src.mute = !src.mute;
     }
 
     //Returns last AudioSource, that is not used to play a clip, or zero element of the array, if all sources are used
@@ -107,7 +100,7 @@ public class AudioManager : Element
         }
     }
 
-    internal void StopSounds()
+    public void StopAllSounds()
     {
         foreach (AudioSource a in efxSources)
         {

@@ -7,6 +7,25 @@ public class GameController : Element
 {
     public bool IsPaused { get { return isPaused; } private set { } }
     private bool isPaused = false;
+    public GameObject joystick;
+    public GameObject jumpButton;
+
+    void Start()
+    {
+        if (PlayerPrefs.HasKey("ToggleJoystick"))
+        {
+            Debug.Log(PlayerPrefs.GetFloat("ToggleJoystick"));
+            if(PlayerPrefs.GetFloat("ToggleJoystick") == 0)
+            {
+                joystick.SetActive(false);
+                jumpButton.SetActive(false);
+            }else
+            {
+                joystick.SetActive(true);
+                jumpButton.SetActive(true);
+            }
+        }
+    }
 
     public void TogglePause()
     {

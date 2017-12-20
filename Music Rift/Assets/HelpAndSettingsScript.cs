@@ -7,18 +7,13 @@ using UnityEngine.UI;
 public class HelpAndSettingsScript : MonoBehaviour
 {
     public GameObject SettingsPanel;
+    private bool ToggleMusic = true;
+    private bool ToggleJoystick = true;
+
     void Start()
     {
-        if (PlayerPrefs.HasKey("Volume"))
-        {
-            if (PlayerPrefs.GetFloat("Volume") != 0)
-            SettingsPanel.GetComponentInChildren<Toggle>().isOn = true;
-            else SettingsPanel.GetComponentInChildren<Toggle>().isOn = false;
-        }
-        else
-        {
-            SettingsPanel.GetComponentInChildren<Toggle>().isOn = true;
-        }
+        setBoolToggle("ToggleMusic", ref ToggleMusic);
+        setBoolToggle("ToggleJoystick", ref ToggleJoystick);
     }
     public void Back()
     {
@@ -27,9 +22,48 @@ public class HelpAndSettingsScript : MonoBehaviour
 
     public void Save()
     {
-        if(SettingsPanel.GetComponentInChildren<Toggle>().isOn)
-            PlayerPrefs.SetFloat("Volume", 1);
-        else PlayerPrefs.SetFloat("Volume", 0);
+        Debug.Log(ToggleMusic);
+        Debug.Log(ToggleJoystick);
+        if (ToggleMusic)
+            PlayerPrefs.SetFloat("ToggleMusic", 1);
+        else PlayerPrefs.SetFloat("ToggleMusic", 0);
+        if(ToggleJoystick)
+            PlayerPrefs.SetFloat("ToggleJoystick", 1);
+        else PlayerPrefs.SetFloat("ToggleJoystick", 0);
+    }
 
+    public void MusicToggleChanged(bool isOn)
+    {
+        ToggleMusic = !ToggleMusic;
+    }
+    public void JoystickToggleChanged(bool isOn)
+    {
+        ToggleJoystick = !ToggleJoystick;
+    }
+
+    void setBoolToggle(string name, ref bool variable)
+    {
+        Toggle[] toggles = SettingsPanel.GetComponentsInChildren<Toggle>();
+        Toggle t = null;
+        foreach (Toggle item in toggles)
+        {
+            if (item.gameObject.name == name)
+            {
+                t = item;
+                Debug.Log(item.gameObject.name);
+                break;
+            }
+        }
+        if(t != null)
+        if (PlayerPrefs.HasKey(name))
+        {
+            if (PlayerPrefs.GetFloat(name) != 0)
+                t.isOn = variable;
+            else t.isOn = false;
+        }
+        else
+        {
+            t.isOn = variable;
+        }
     }
 }

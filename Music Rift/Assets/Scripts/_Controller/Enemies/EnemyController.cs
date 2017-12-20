@@ -13,6 +13,8 @@ public class EnemyController : BaseEnemyController
     public float move = 1;
     byte timer = 0;
 
+    Animator animator;
+
     Vector3 startPosition;
 
     void Start()
@@ -20,11 +22,14 @@ public class EnemyController : BaseEnemyController
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         gameplay = app.controller.rhythmG;
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
         Timer();
+        if (move != 0) animator.SetBool("Run", true);
+        else animator.SetBool("Run", false);
         Vector3 side = Vector3.zero;
         if (move > 0) side = Vector3.right;
         if (move < 0) side = Vector3.left;

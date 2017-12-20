@@ -22,8 +22,6 @@ public class HelpAndSettingsScript : MonoBehaviour
 
     public void Save()
     {
-        Debug.Log(ToggleMusic);
-        Debug.Log(ToggleJoystick);
         if (ToggleMusic)
             PlayerPrefs.SetFloat("ToggleMusic", 1);
         else PlayerPrefs.SetFloat("ToggleMusic", 0);

@@ -7,7 +7,7 @@ public class PlayerController : Element
     private PlayerModel model;
     private PlayerView view;
     private float move;
-    private bool isAndroid;
+    public bool isAndroid;
 
     void Awake()
     {

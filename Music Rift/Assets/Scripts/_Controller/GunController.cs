@@ -91,14 +91,18 @@ public class GunController : Element
         lr.endWidth = gun.endWidth;
         lr.SetPosition(0, new Vector3(startPos.x, startPos.y, -5));
         lr.SetPosition(1, new Vector3(endPos.x, endPos.y, -5));
-        Destroy(myLine, 0.5f);
+        if (!app.controller.player.isAndroid)
+        {
+            lr.material = new Material(Shader.Find("Particles/Additive"));
+            lr.SetColors(Color.yellow, Color.red);
+        }
+        Destroy(myLine, 0.2f);
     }
 
     private void RotateGun()//bad work when shoot to up or down direction
     {
         rotateGunBack();
         angle = (float)(Math.Atan((endPos.y - startPos.y) / (endPos.x - startPos.x))) * Mathf.Rad2Deg;
-        Debug.Log(angle);
         if (!app.model.player.facingRight)
         {
             angle = -angle;

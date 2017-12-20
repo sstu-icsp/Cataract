@@ -15,17 +15,6 @@ public class RhythmGView : Element
     private Color32 initialColor = new Color32(0x00, 0x00, 0x00, 0x7F);
     private Color32 inputColor = new Color32(0x00, 0xFF, 0x21, 0x7F);
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
-
     public void AnimateBeat()
     {
         background.color = highlightedColor;

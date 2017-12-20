@@ -14,7 +14,6 @@ public class GameController : Element
     {
         if (PlayerPrefs.HasKey("ToggleJoystick"))
         {
-            Debug.Log(PlayerPrefs.GetFloat("ToggleJoystick"));
             if(PlayerPrefs.GetFloat("ToggleJoystick") == 0)
             {
                 joystick.SetActive(false);

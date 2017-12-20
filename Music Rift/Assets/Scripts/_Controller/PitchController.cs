@@ -22,9 +22,21 @@ public class PitchController : Element
     void Start()
     {
         pitch = source.pitch;
-        if (PlayerPrefs.HasKey("Volume"))
+        if (PlayerPrefs.HasKey("ToggleMusic"))
         {        
-            volume = PlayerPrefs.GetFloat("Volume");//////??????? don't work
+            volume = PlayerPrefs.GetFloat("ToggleMusic");//////??????? don't work
+
+
+            /**
+             * пока будет так 
+             * */
+            if (PlayerPrefs.GetFloat("ToggleMusic") == 0)
+            {
+                AudioListener.volume = 0;
+            }else
+            {
+                AudioListener.volume = 1;
+            }
         }
 
     }

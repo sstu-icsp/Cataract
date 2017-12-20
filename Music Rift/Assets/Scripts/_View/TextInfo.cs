@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class TextInfo : Element {
 
-    private string titleList = "блаблабла";
-    private string textList = "туруру";
+    private string titleList = "Здесь ничего нет";
+    private string textList = "";
 
     public Button closeButton;
 

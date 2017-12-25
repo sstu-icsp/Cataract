@@ -12,6 +12,7 @@ public class EnemyController : BaseEnemyController
     Rigidbody2D rb;
     public float move = 1;
     byte timer = 0;
+    bool playerDetected = false;
 
     Animator animator;
 
@@ -27,6 +28,23 @@ public class EnemyController : BaseEnemyController
 
     void FixedUpdate()
     {
+        if (playerDetected)IsPlayerDetected();
+        else SimpleMotion();
+    }
+
+    private void IsPlayerDetected()
+    {
+        animator.SetBool("Run", false);
+        Debug.Log(transform.position.x + " /" + app.view.player.gameObject.transform.position.x);
+        if(transform.position.x < app.view.player.gameObject.transform.position.x && move < 0 
+            || transform.position.x > app.view.player.gameObject.transform.position.x && move > 0)
+        {
+            Flip();
+        }
+    }
+
+    private void SimpleMotion()
+    {
         Timer();
         if (move != 0) animator.SetBool("Run", true);
         else animator.SetBool("Run", false);
@@ -35,9 +53,9 @@ public class EnemyController : BaseEnemyController
         if (move < 0) side = Vector3.left;
         RaycastHit2D[] hit = Physics2D.RaycastAll(rb.position, side, 1f);
         if (hit.Length > 1)
-        {;
+        {
             if (hit[1].collider.tag == "Ground" && timer == 0)
-            {             
+            {
                 Flip();
                 rb.velocity = new Vector2(move, rb.velocity.y);
                 timer = 100;
@@ -52,6 +70,7 @@ public class EnemyController : BaseEnemyController
         }
         rb.velocity = new Vector2(move, rb.velocity.y);
     }
+
     void Flip()
     {
         move = move * -1;
@@ -68,7 +87,6 @@ public class EnemyController : BaseEnemyController
 
     void Timer()
     {
-        //Debug.Log(timer);
         if(timer == 0)
         {
             return;
@@ -77,5 +95,25 @@ public class EnemyController : BaseEnemyController
         {
             timer--;
         }
+    }
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            playerDetected = true;
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            playerDetected = false;
+        }
+    }
+
+    void Fire()
+    {
+
     }
 }

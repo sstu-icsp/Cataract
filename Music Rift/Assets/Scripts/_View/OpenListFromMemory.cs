@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OpenTutorial : Element {
+public class OpenListFromMemory : Element {
     public byte id;
     public GameObject interfaceList;
     private TextInfo textInfo;
@@ -14,7 +14,6 @@ public class OpenTutorial : Element {
         textInfo = interfaceList.GetComponent<TextInfo>();
         textInfo.gameObject.SetActive(true);
         textInfo.getId(id);
-        app.controller.game.TogglePause();
         return;
     }
 

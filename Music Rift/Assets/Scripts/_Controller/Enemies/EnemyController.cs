@@ -17,6 +17,10 @@ public class EnemyController : BaseEnemyController
     Animator animator;
 
     Vector3 startPosition;
+    [SerializeField]
+    GameObject Echo;
+    bool echoShoot = false;
+    private byte timerFire = 0;
 
     void Start()
     {
@@ -24,6 +28,7 @@ public class EnemyController : BaseEnemyController
         startPosition = transform.position;
         gameplay = app.controller.rhythmG;
         animator = GetComponent<Animator>();
+       // Echo = GetComponentInChildren<EchoScript>(true);
     }
 
     void FixedUpdate()
@@ -34,8 +39,14 @@ public class EnemyController : BaseEnemyController
 
     private void IsPlayerDetected()
     {
+        FireTimer();
         animator.SetBool("Run", false);
-        Debug.Log(transform.position.x + " /" + app.view.player.gameObject.transform.position.x);
+        if (!echoShoot)
+        {
+            Instantiate(Echo, transform.position, Quaternion.identity);
+            echoShoot = true;
+            timerFire = 100;
+        }
         if(transform.position.x < app.view.player.gameObject.transform.position.x && move < 0 
             || transform.position.x > app.view.player.gameObject.transform.position.x && move > 0)
         {
@@ -112,8 +123,16 @@ public class EnemyController : BaseEnemyController
         }
     }
 
-    void Fire()
+    void FireTimer()
     {
-
+        if (timerFire == 0)
+        {
+            echoShoot = false;
+            return;
+        }
+        else
+        {
+            timerFire--;
+        }
     }
 }

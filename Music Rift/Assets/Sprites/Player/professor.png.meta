@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 70b7b61773df4bb46a340f9ae63a34ee
-timeCreated: 1514239918
+timeCreated: 1514304737
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -106,8 +106,8 @@ TextureImporter:
       name: professor_coat_left
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
+        x: 727
+        y: 13
         width: 139
         height: 496
       alignment: 9
@@ -119,8 +119,8 @@ TextureImporter:
       name: professor_coat_right
       rect:
         serializedVersion: 2
-        x: 143
-        y: 1
+        x: 868
+        y: 13
         width: 101
         height: 497
       alignment: 9
@@ -132,8 +132,8 @@ TextureImporter:
       name: professor_face
       rect:
         serializedVersion: 2
-        x: 246
-        y: 284
+        x: 521
+        y: 295
         width: 166
         height: 213
       alignment: 0
@@ -145,8 +145,8 @@ TextureImporter:
       name: professor_eyeball
       rect:
         serializedVersion: 2
-        x: 414
-        y: 491
+        x: 502
+        y: 387
         width: 14
         height: 19
       alignment: 0
@@ -158,8 +158,8 @@ TextureImporter:
       name: professor_eyebrow_left
       rect:
         serializedVersion: 2
-        x: 413
-        y: 470
+        x: 273
+        y: 405
         width: 43
         height: 19
       alignment: 0
@@ -171,8 +171,8 @@ TextureImporter:
       name: professor_pants
       rect:
         serializedVersion: 2
-        x: 413
-        y: 403
+        x: 200
+        y: 430
         width: 170
         height: 65
       alignment: 0
@@ -184,8 +184,8 @@ TextureImporter:
       name: professor_foot
       rect:
         serializedVersion: 2
-        x: 611
-        y: 346
+        x: 273
+        y: 344
         width: 76
         height: 59
       alignment: 0
@@ -197,8 +197,8 @@ TextureImporter:
       name: professor_arm
       rect:
         serializedVersion: 2
-        x: 700
-        y: 218
+        x: 277
+        y: 14
         width: 66
         height: 198
       alignment: 9
@@ -207,24 +207,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: professor_nose
-      rect:
-        serializedVersion: 2
-        x: 819
-        y: 396
-        width: 34
-        height: 55
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
       name: professor_eye_right
       rect:
         serializedVersion: 2
-        x: 855
-        y: 396
+        x: 688
+        y: 357
         width: 31
         height: 38
       alignment: 0
@@ -236,8 +223,8 @@ TextureImporter:
       name: professor_moustache
       rect:
         serializedVersion: 2
-        x: 412
-        y: 346
+        x: 1
+        y: 430
         width: 198
         height: 55
       alignment: 0
@@ -249,8 +236,8 @@ TextureImporter:
       name: professor_shin
       rect:
         serializedVersion: 2
-        x: 819
-        y: 204
+        x: 346
+        y: 13
         width: 57
         height: 190
       alignment: 0
@@ -262,8 +249,8 @@ TextureImporter:
       name: professor_forearm
       rect:
         serializedVersion: 2
-        x: 878
-        y: 204
+        x: 372
+        y: 344
         width: 71
         height: 164
       alignment: 0
@@ -275,8 +262,8 @@ TextureImporter:
       name: professor_hand
       rect:
         serializedVersion: 2
-        x: 951
-        y: 299
+        x: 445
+        y: 344
         width: 55
         height: 86
       alignment: 0
@@ -288,8 +275,8 @@ TextureImporter:
       name: professor_eyebrow_right
       rect:
         serializedVersion: 2
-        x: 413
-        y: 330
+        x: 688
+        y: 296
         width: 37
         height: 14
       alignment: 0
@@ -301,8 +288,8 @@ TextureImporter:
       name: professor_hair_back
       rect:
         serializedVersion: 2
-        x: 452
-        y: 217
+        x: 274
+        y: 215
         width: 246
         height: 127
       alignment: 0
@@ -314,8 +301,8 @@ TextureImporter:
       name: professor_eye_left
       rect:
         serializedVersion: 2
-        x: 413
-        y: 285
+        x: 687
+        y: 312
         width: 39
         height: 43
       alignment: 0
@@ -327,8 +314,8 @@ TextureImporter:
       name: professor_neck
       rect:
         serializedVersion: 2
-        x: 951
-        y: 204
+        x: 405
+        y: 13
         width: 52
         height: 93
       alignment: 0
@@ -340,8 +327,8 @@ TextureImporter:
       name: professor_shirt
       rect:
         serializedVersion: 2
-        x: 246
-        y: 0
+        x: 521
+        y: 10
         width: 204
         height: 284
       alignment: 0
@@ -353,8 +340,8 @@ TextureImporter:
       name: professor_coat_back
       rect:
         serializedVersion: 2
-        x: 452
-        y: 2
+        x: 2
+        y: 215
         width: 269
         height: 213
       alignment: 0
@@ -366,8 +353,8 @@ TextureImporter:
       name: professor_hair_front
       rect:
         serializedVersion: 2
-        x: 723
-        y: 2
+        x: 2
+        y: 13
         width: 273
         height: 200
       alignment: 0
@@ -379,8 +366,8 @@ TextureImporter:
       name: professor_mouth_open
       rect:
         serializedVersion: 2
-        x: 998
-        y: 45
+        x: 318
+        y: 405
         width: 24
         height: 15
       alignment: 0
@@ -392,8 +379,8 @@ TextureImporter:
       name: professor_ear
       rect:
         serializedVersion: 2
-        x: 996
-        y: 2
+        x: 501
+        y: 344
         width: 20
         height: 41
       alignment: 0
@@ -405,8 +392,8 @@ TextureImporter:
       name: professor_mouth_closed
       rect:
         serializedVersion: 2
-        x: 2
-        y: 499
+        x: 273
+        y: 424
         width: 14
         height: 5
       alignment: 0
@@ -418,8 +405,8 @@ TextureImporter:
       name: professor_thigh
       rect:
         serializedVersion: 2
-        x: 769
-        y: 204
+        x: 971
+        y: 13
         width: 48
         height: 232
       alignment: 0

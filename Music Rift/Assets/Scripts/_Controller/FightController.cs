@@ -50,8 +50,8 @@ public class FightController : Element
 
     public void StartFight()
     {
-        enemy.gameplay.Init();
         IsFighting = true;
+        enemy.gameplay.Init();       
     }
 
     public void EndFight()

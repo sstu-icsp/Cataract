@@ -29,7 +29,7 @@ public class PlayerController : Element
             Collision2D col = (Collision2D)p_data[0];
             switch (col.gameObject.tag)
             {
-                case "Exit": app.controller.game.ReloadLevel(); break;
+                case "Exit": app.controller.game.CongrateShow(); break;
                 case "Acid": app.controller.game.ReloadLevel(); break;
                 case "Ground": model.isGrounded = true; break;
             }

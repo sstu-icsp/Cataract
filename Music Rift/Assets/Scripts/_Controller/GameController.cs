@@ -9,6 +9,7 @@ public class GameController : Element
     private bool isPaused = false;
     public GameObject joystick;
     public GameObject jumpButton;
+    public GameObject congratePanel;
 
     void Start()
     {
@@ -38,7 +39,7 @@ public class GameController : Element
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene("MainMenu");
+            MainMenu();
     }
 
     public void ReloadLevel()
@@ -46,5 +47,21 @@ public class GameController : Element
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void CongrateShow()
+    {
+        TogglePause();
+        congratePanel.SetActive(true);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void NextLevel()
+    {
+        TogglePause();
+        SceneManager.LoadScene("SecondScene");
+    }
     //TODO: NextLevel() PauseMenu() etc
 }

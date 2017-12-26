@@ -20,11 +20,12 @@ public class EchoScript : Element {
     }
     void Flight()
     {
-        float temp = moveToRight ? speed : -speed;
-        if(moveToRight)
-        {
-            transform.position = new Vector3(transform.position.x + temp, transform.position.y, transform.position.z);
-        }
+        float temp = moveToRight ? speed : -speed;        
+        transform.position = new Vector3(transform.position.x + temp, transform.position.y, transform.position.z);
+        
+        if (!moveToRight)
+        transform.rotation = Quaternion.Euler(
+         new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 180));
     }
 
    /* void OnCollisionEnter2D(Collision2D col)
@@ -42,7 +43,7 @@ public class EchoScript : Element {
             isFlight = false;
             Destroy(gameObject);
         }
-        if(col.tag != "Player")
+        if(col.tag == "Player")
         {
             app.controller.player.ChangeHealth(-5);
         }

@@ -14,7 +14,7 @@ public class GunController : Element
     private GunView gunView;
     Gun gun;
     private int currentModeInd;
-    private Vector2 startPos, currPos, endPos, dir;
+    private Vector3 startPos, currPos, endPos, dir;
     private float timeLeft;
     float angle;
     private bool isRotated;
@@ -27,22 +27,28 @@ public class GunController : Element
 
     void Update()
     {
-   
+
         if ((Input.GetMouseButtonDown(0) || Input.touches.Any(x => x.phase == TouchPhase.Began)) && !app.controller.game.IsPaused)//Отслеживание нажатия на экран 
-        {         
-            startPos = app.model.gunModel.GunO.transform.position;
+        {
+            //startPos = app.model.gunModel.GunO.transform.position;
+            if(currMode.muzzlePosition!=null)
+            startPos = currMode.muzzlePosition.transform.position;
+            else
+            {
+                startPos = app.model.gunModel.GunO.transform.position;
+            }
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
             Vector2 dir = (endPos - startPos).normalized;
-            endPos = new Vector2(startPos.x + dir.x * 30, startPos.y + dir.y * 30);
+            endPos = new Vector3(startPos.x + dir.x * 30, startPos.y + dir.y * 30, endPos.z);
             if (!IsPointerOverUIObject())
                 drawLaser();
-        }
-        if (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-            if(timeLeft <= 0)
+            if (timeLeft > 0)
             {
-                rotateGunBack();
+                timeLeft -= Time.deltaTime;
+                if (timeLeft <= 0)
+                {
+                    rotateGunBack();
+                }
             }
         }
     }
@@ -63,18 +69,32 @@ public class GunController : Element
         if (h.Length > 0)
         {
             if (h.Length > 1)
+            {
                 if (h[0].collider.tag == "Rift" && !h[1].collider.isTrigger)
                 {
                     app.controller.events.OnCollision(this, h[0].collider.gameObject);
                 }
+                if (h[1].collider.tag == "Ground")
+                {
+                    endPos = h[1].point;
+                }
+            }
+            if(h.Length > 2)
+            {
+                if (h[2].collider.tag == "Ground")
+                {
+                    endPos = h[2].point;
+                }
+            }
             if (h[0].collider.tag == "Enemy")
             {
                 app.controller.events.OnCollision(this, h[0].collider.gameObject);
             }
-                if (h[0].collider.tag == "Ground")
+            if (h[0].collider.tag == "Ground" )
             {
                 endPos = h[0].point;
             }
+
         }
 
     }

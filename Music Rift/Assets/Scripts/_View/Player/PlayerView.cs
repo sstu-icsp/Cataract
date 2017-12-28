@@ -30,6 +30,16 @@ public class PlayerView : Element {
         animator.SetBool("IsGrounded", model.isGrounded);
     }
 
+    internal void RemoveWeapon()
+    {
+        animator.SetLayerWeight(1, 0);
+    }
+
+    internal void TakeWeapon()
+    {
+        animator.SetLayerWeight(1, 1);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         app.controller.events.OnCollision(this, col);

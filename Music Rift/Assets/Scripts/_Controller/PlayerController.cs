@@ -23,7 +23,19 @@ public class PlayerController : Element
             isAndroid = true;
             app.view.ui.disableJoystick();
         }
+        app.view.gun.OnGunChanged += GunChanged;
+    }
 
+    private void GunChanged(int mode)
+    {
+        if(mode == 0)
+        {
+            view.RemoveWeapon();
+        }
+        else
+        {
+            view.TakeWeapon();
+        }
     }
 
     private void OnCollision(Element p_source, object[] p_data)

@@ -28,7 +28,6 @@ public class EnemyController : BaseEnemyController
         startPosition = transform.position;
         gameplay = app.controller.rhythmG;
         animator = GetComponent<Animator>();
-       // Echo = GetComponentInChildren<EchoScript>(true);
     }
 
     void FixedUpdate()
@@ -43,9 +42,17 @@ public class EnemyController : BaseEnemyController
         animator.SetBool("Run", false);
         if (!echoShoot)
         {
-            Instantiate(Echo, transform.position, Quaternion.identity);
-            echoShoot = true;
-            timerFire = 100;
+            if (!app.controller.fight.IsFighting)
+            {
+                Instantiate(Echo, transform.position, Quaternion.identity);
+                echoShoot = true;
+                timerFire = 100;
+            }
+            else
+            {
+                echoShoot = true;
+                timerFire = 100;
+            }
         }
         if(transform.position.x < app.view.player.gameObject.transform.position.x && move < 0 
             || transform.position.x > app.view.player.gameObject.transform.position.x && move > 0)
@@ -120,6 +127,14 @@ public class EnemyController : BaseEnemyController
         if (col.gameObject.tag == "Player")
         {
             playerDetected = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag == "Player")
+        {
+            app.controller.player.ChangeHealth(-10);
         }
     }
 

@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerView : Element {
 
+    public Animator animator;
     public Rigidbody2D rb;
     public AudioClip attackSound; 
     public Transform trS1;
@@ -17,11 +19,10 @@ public class PlayerView : Element {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
     }
-	
-	// Update is called once per frame
+
 	void Update () {
-		
-	}
+        animator.SetFloat("Velocity", Math.Abs(rb.velocity.x));
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 70b7b61773df4bb46a340f9ae63a34ee
-timeCreated: 1514324033
+timeCreated: 1514472162
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -29,6 +29,7 @@ TextureImporter:
     21300044: professor_ear
     21300046: professor_mouth_closed
     21300048: professor_thigh
+    21300050: professor_shirt_side
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -411,6 +412,19 @@ TextureImporter:
         height: 232
       alignment: 9
       pivot: {x: 0.41442743, y: 0.9042585}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_shirt_side
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 14
+        width: 70
+        height: 281
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

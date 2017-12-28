@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using CnControls;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerController : Element
 {
+    public Animator animator;
     private PlayerModel model;
     private PlayerView view;
     private float move;
@@ -69,10 +71,14 @@ public class PlayerController : Element
         view.rb.velocity = new Vector2(move * model.maxSpeed, view.rb.velocity.y);
         if (move > 0 && !model.facingRight) Flip();
         else if (move < 0 && model.facingRight) Flip();
-
         if (model.health == 0)
             app.controller.game.ReloadLevel();
+        UpdateAnimation();
+    }
 
+    private void UpdateAnimation()
+    {
+        Animator animator;
     }
 
     public void ChangeHealth(int val)

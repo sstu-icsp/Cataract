@@ -17,8 +17,19 @@ public class OpenMemory : Element {
         app.controller.game.TogglePause();
         gameObject.SetActive(false);
         app.model.player.collectingList = false;
+        app.model.player.ifOpenList = false;
     }
 
+    public GameObject gameObject;
+
+    public void ToggleModeSelectionPanel()
+    {
+        app.model.player.collectingList = true;
+        app.model.player.ifOpenList = true;
+        gameObject.SetActive(true);
+        app.controller.game.TogglePause();
+        return;
+    }
     //public byte id;
     //public GameObject interfaceList;
     //private TextInfo textInfo;
@@ -32,13 +43,4 @@ public class OpenMemory : Element {
     //    app.controller.game.TogglePause();
     //    return;
     //}
-    public GameObject gameObject;
-
-    public void ToggleModeSelectionPanel()
-    {
-        //app.model.player.collectingList = true;
-        gameObject.SetActive(true);
-        app.controller.game.TogglePause();
-        return;
-    }
 }

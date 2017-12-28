@@ -7,6 +7,7 @@ public class FindList : Element {
     public byte id;
     public string textList = "";
     public GameObject interfaceList;
+    public GameObject list;
     private TextInfo textInfo;
     
 	void OnCollisionEnter2D(Collision2D other)
@@ -19,6 +20,7 @@ public class FindList : Element {
             
             textInfo = interfaceList.GetComponent<TextInfo>();
             textInfo.gameObject.SetActive(true);
+            list.SetActive(true);
             textInfo.getId(id);
             app.controller.game.TogglePause();
             return;
@@ -29,6 +31,7 @@ public class FindList : Element {
             app.model.player.collectingList = true;
             textInfo = interfaceList.GetComponent<TextInfo>();
             textInfo.gameObject.SetActive(true);
+            list.SetActive(true);
             textInfo.getId(id);
            // Debug.Log(Time.timeScale);
             app.controller.game.TogglePause();

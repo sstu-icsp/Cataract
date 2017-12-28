@@ -10,4 +10,5 @@ public class PlayerModel : Element
     public GameObject playerObject;
     public bool isGrounded;
     public bool collectingList = false;
+    public bool ifOpenList = false;//для снятия паузы только для поднятого листа. если лист закрыт в дневнике, то паузы нет
 }

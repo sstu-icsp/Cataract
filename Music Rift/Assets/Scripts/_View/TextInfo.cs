@@ -17,7 +17,10 @@ public class TextInfo : Element {
 
     void Close()
     {
-        app.controller.game.TogglePause();
+        if (app.model.player.ifOpenList == false)
+        {
+            app.controller.game.TogglePause();
+        }
         gameObject.SetActive(false);
         app.model.player.collectingList = false;
     }
@@ -45,5 +48,10 @@ public class TextInfo : Element {
                 } break;
         }
         getText();
+    }
+
+    public void giveListById(byte id)
+    {
+        
     }
 }

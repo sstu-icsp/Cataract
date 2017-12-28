@@ -1,0 +1,435 @@
+fileFormatVersion: 2
+guid: 70b7b61773df4bb46a340f9ae63a34ee
+timeCreated: 1514472162
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: professor_coat_left
+    21300002: professor_coat_right
+    21300004: professor_face
+    21300006: professor_eyeball
+    21300008: professor_eyebrow_left
+    21300010: professor_pants
+    21300012: professor_foot
+    21300014: professor_arm
+    21300016: professor_nose
+    21300018: professor_eye_right
+    21300020: professor_moustache
+    21300022: professor_shin
+    21300024: professor_forearm
+    21300026: professor_hand
+    21300028: professor_eyebrow_right
+    21300030: professor_hair_back
+    21300032: professor_eye_left
+    21300034: professor_neck
+    21300036: professor_shirt
+    21300038: professor_coat_back
+    21300040: professor_hair_front
+    21300042: professor_mouth_open
+    21300044: professor_ear
+    21300046: professor_mouth_closed
+    21300048: professor_thigh
+    21300050: professor_shirt_side
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: professor_coat_left
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 13
+        width: 139
+        height: 496
+      alignment: 9
+      pivot: {x: 0.97224885, y: 0.99156314}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_coat_right
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 13
+        width: 101
+        height: 497
+      alignment: 9
+      pivot: {x: 0.19289179, y: 0.9934769}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_face
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 295
+        width: 166
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_eyeball
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 387
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_eyebrow_left
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 405
+        width: 43
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_pants
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 430
+        width: 170
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_foot
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 344
+        width: 76
+        height: 59
+      alignment: 9
+      pivot: {x: 0.21175425, y: 0.88290304}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_arm
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 16
+        width: 69
+        height: 181
+      alignment: 9
+      pivot: {x: 0.7566161, y: 0.9932511}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_eye_right
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 357
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_moustache
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 430
+        width: 198
+        height: 55
+      alignment: 9
+      pivot: {x: 0.5726511, y: 0.6743625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_shin
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 13
+        width: 57
+        height: 190
+      alignment: 9
+      pivot: {x: 0.82427657, y: 0.9359716}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_forearm
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 344
+        width: 71
+        height: 164
+      alignment: 9
+      pivot: {x: 0.023326606, y: 0.932489}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_hand
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 344
+        width: 55
+        height: 86
+      alignment: 9
+      pivot: {x: 0.45021197, y: 0.9139344}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_eyebrow_right
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 341
+        width: 37
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_hair_back
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 215
+        width: 246
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_eye_left
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 296
+        width: 39
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_neck
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 13
+        width: 52
+        height: 93
+      alignment: 9
+      pivot: {x: 0.40778878, y: 0.1694072}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_shirt
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 10
+        width: 204
+        height: 284
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_coat_back
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 215
+        width: 269
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_hair_front
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 13
+        width: 273
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_mouth_open
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 405
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_ear
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 344
+        width: 20
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_mouth_closed
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 424
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_thigh
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 13
+        width: 48
+        height: 232
+      alignment: 9
+      pivot: {x: 0.41442743, y: 0.9042585}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: professor_shirt_side
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 14
+        width: 70
+        height: 281
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

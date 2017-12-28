@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using CnControls;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerController : Element
 {
+    public Animator animator;
     private PlayerModel model;
     private PlayerView view;
     private float move;
     public bool isAndroid;
+    private float jumpStartY;
+    public float jumpHeight;
 
     void Awake()
     {
@@ -19,7 +23,19 @@ public class PlayerController : Element
             isAndroid = true;
             app.view.ui.disableJoystick();
         }
+        app.view.gun.OnGunChanged += GunChanged;
+    }
 
+    private void GunChanged(int mode)
+    {
+        if(mode == 0)
+        {
+            view.RemoveWeapon();
+        }
+        else
+        {
+            view.TakeWeapon();
+        }
     }
 
     private void OnCollision(Element p_source, object[] p_data)
@@ -63,16 +79,16 @@ public class PlayerController : Element
                 view.rb.AddForce(new Vector2(0f, model.jumpForce));
                 view.rb.velocity = new Vector2(0, 0);
                 model.isGrounded = false;
+                jumpStartY = view.transform.position.y;
             }
         }
 
         view.rb.velocity = new Vector2(move * model.maxSpeed, view.rb.velocity.y);
+        jumpHeight = view.transform.position.y - jumpStartY;
         if (move > 0 && !model.facingRight) Flip();
         else if (move < 0 && model.facingRight) Flip();
-
         if (model.health == 0)
             app.controller.game.ReloadLevel();
-
     }
 
     public void ChangeHealth(int val)

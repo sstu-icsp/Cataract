@@ -32,6 +32,8 @@ public class GunController : Element
         {         
             startPos = app.model.gunModel.GunO.transform.position;
             endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
+            Vector2 dir = (endPos - startPos).normalized;
+            endPos = new Vector2(startPos.x + dir.x * 30, startPos.y + dir.y * 30);
             if (!IsPointerOverUIObject())
                 drawLaser();
         }

@@ -10,6 +10,7 @@ public class GunView : Element
     [SerializeField]
     protected GameObject modeSelectionPanel;
     private GunController controller;
+    public event Action<int> OnGunChanged;
 
     void Awake()
     {
@@ -20,15 +21,17 @@ public class GunView : Element
 
     public void Shoot(Vector3 position, Vector2 touchPosition)
     {
+
     
     }
-
+ 
     public void SetMode(int modeInd)
     {
         controller.SetMode(modeInd);
         app.model.gunModel.CurrentGun = (sbyte)(modeInd - 1);
         ToggleModeSelectionPanel();
         gunRenderer.sprite = currentGunImage.sprite = controller.currMode.sprite;
+        OnGunChanged(modeInd);
         if (modeInd == 0)
             currentGunImage.enabled = false;
         else

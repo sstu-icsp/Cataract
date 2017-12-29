@@ -1,15 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FindList : Element {
+public class ListView : Element {
 
     public byte id;
     public string textList = "";
     public GameObject interfaceList;
     public GameObject list;
     private TextInfo textInfo;
-    
+    public static event Action<int> OnListCollected;
+
 	void OnCollisionEnter2D(Collision2D other)
     {
         if (app.model.player.collectingList) return;
@@ -23,6 +25,7 @@ public class FindList : Element {
             list.SetActive(true);
             textInfo.getId(id);
             app.controller.game.TogglePause();
+            OnListCollected(id);
             return;
         }
         if(other.gameObject.tag == "Rift" && other.gameObject.GetComponent<RiftController>().PlayerDetected)
@@ -37,5 +40,10 @@ public class FindList : Element {
             app.controller.game.TogglePause();
             Debug.Log(Time.timeScale);
         }
+    }
+
+    public void ActivateInDiary()
+    {
+        list.SetActive(true);
     }
 }

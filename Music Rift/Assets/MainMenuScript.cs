@@ -7,6 +7,7 @@ public class MainMenuScript : MonoBehaviour
 {
     public void StartGame()
     {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("FirstScene");
     }
     public void Exit()

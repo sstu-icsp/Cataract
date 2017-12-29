@@ -7,5 +7,4 @@
     public FightController fight;
     public PitchController pitch;
     public RhythmGController rhythmG;
-    
 }

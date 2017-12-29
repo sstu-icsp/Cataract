@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GunView : Element
 {
     public Image currentGunImage;
-    public SpriteRenderer gunRenderer; 
+    public GameObject gunRenderer; 
     
     [SerializeField]
     protected GameObject modeSelectionPanel;
@@ -16,7 +16,7 @@ public class GunView : Element
     {
         controller = app.controller.gun;
         controller.SetMode(0);
-        gunRenderer.sprite = currentGunImage.sprite = controller.currMode.sprite;
+        gunRenderer.gameObject.SetActive(false);
     }
 
     public void Shoot(Vector3 position, Vector2 touchPosition)
@@ -30,12 +30,17 @@ public class GunView : Element
         controller.SetMode(modeInd);
         app.model.gunModel.CurrentGun = (sbyte)(modeInd - 1);
         ToggleModeSelectionPanel();
-        gunRenderer.sprite = currentGunImage.sprite = controller.currMode.sprite;
         OnGunChanged(modeInd);
         if (modeInd == 0)
+        {
             currentGunImage.enabled = false;
-        else
+            gunRenderer.SetActive(false);
+        }
+        else {
+            currentGunImage.sprite = controller.currMode.sprite;
             currentGunImage.enabled = true;
+            gunRenderer.SetActive(true);
+        }
     }
 
   

@@ -55,6 +55,7 @@ public class GameController : Element
 
     public void MainMenu()
     {
+        TogglePause();
         SceneManager.LoadScene("MainMenu");
     }
 

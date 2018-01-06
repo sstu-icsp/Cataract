@@ -20,8 +20,6 @@ public class OpenMemory : Element {
         app.model.player.ifOpenList = false;
     }
 
-    public GameObject gameObject;
-
     public void ToggleModeSelectionPanel()
     {
         app.model.player.collectingList = true;

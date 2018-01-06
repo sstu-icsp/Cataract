@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ScrollingBackground : MonoBehaviour
 {
-    private Transform cameraTransform;
+  //  private Transform cameraTransform;
     private Transform[] layers;
-    private float viewZone = 10;
+   // private float viewZone = 10;
     private int leftIndex;
     private int rightIndex;
 
@@ -14,7 +14,7 @@ public class ScrollingBackground : MonoBehaviour
 
     private void Start()
     {
-        cameraTransform = Camera.main.transform;
+      //  cameraTransform = Camera.main.transform;
         layers = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -38,7 +38,7 @@ public class ScrollingBackground : MonoBehaviour
 
     private void ScrollLeft()
     {
-        int lastright = rightIndex;
+      //  int lastright = rightIndex;
         layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - backgroundSize);
         leftIndex = rightIndex;
         rightIndex--;
@@ -47,7 +47,7 @@ public class ScrollingBackground : MonoBehaviour
     }
     private void ScrollRight()
     {
-        int lastleft = leftIndex;
+       // int lastleft = leftIndex;
         layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + backgroundSize);
         rightIndex = leftIndex;
         leftIndex++;

@@ -13,7 +13,7 @@ public class AudioManager : Element
     public float MusicVolume
     {
         get { return musicVolume; }
-        set { value = Mathf.Clamp01(value); musicVolume = value; musicSource.volume = value;}
+        set { value = Mathf.Clamp01(value); musicVolume = value; musicSource.volume = value; }
     }
     public static AudioManager instance;
     public AudioClip music;
@@ -27,6 +27,7 @@ public class AudioManager : Element
     private AudioSource musicSource;
     [SerializeField]
     private AudioSource[] efxSources;
+    public AudioSource loopedEfxSource;
 
     void Awake()
     {
@@ -41,12 +42,21 @@ public class AudioManager : Element
         efxSource = getEfxSource();
     }
 
-    public void PlayEffect(AudioClip clip)
+    public AudioSource PlayEffect(AudioClip clip, bool looped = false)
     {
-        efxSource = getEfxSource();
+        if (looped)
+        {
+            efxSource = loopedEfxSource;
+            efxSource.clip = clip;
+        }
+        else
+        {
+            efxSource = getEfxSource();
+        }
         efxSource.pitch = 1;
         efxSource.clip = clip;
         efxSource.Play();
+        return efxSource;
     }
 
     public void PlayRandomSfx(params AudioClip[] clips)
@@ -84,7 +94,7 @@ public class AudioManager : Element
 
     public void ToggleEffectsMute()
     {
-        foreach(AudioSource src in efxSources)
+        foreach (AudioSource src in efxSources)
             src.mute = !src.mute;
     }
 

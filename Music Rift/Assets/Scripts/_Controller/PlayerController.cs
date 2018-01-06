@@ -5,13 +5,14 @@ using System;
 
 public class PlayerController : Element
 {
-    public Animator animator;
     private PlayerModel model;
     private PlayerView view;
     private float move;
     public bool isAndroid;
     private float jumpStartY;
     public float jumpHeight;
+    public bool isWeaponPowerUp;
+    private bool isWeaponized;
 
     void Awake()
     {
@@ -21,20 +22,57 @@ public class PlayerController : Element
         if (Application.platform == RuntimePlatform.Android)
         {
             isAndroid = true;
+        }
+        else
+        {
             app.view.ui.disableJoystick();
         }
-        app.view.gun.OnGunChanged += GunChanged;
+        GunView.OnGunChanged += GunChanged;
+        GunController.OnPowerUp += GunPowerUp;
+        WeaponPowerUpBehaviour.OnPowerUpFinished += GunPowerUpFinished;
+        GunController.OnStopShooting += StopShooting;
     }
-
+    void OnDestroy()
+    {
+        GunView.OnGunChanged -= GunChanged;
+        GunController.OnPowerUp -= GunPowerUp;
+        WeaponPowerUpBehaviour.OnPowerUpFinished -= GunPowerUpFinished;
+        GunController.OnStopShooting -= StopShooting;
+    }
     private void GunChanged(int mode)
     {
-        if(mode == 0)
+        if (mode == 0)
         {
             view.RemoveWeapon();
+            isWeaponized = false;
         }
         else
         {
             view.TakeWeapon();
+            isWeaponized = true;
+        }
+    }
+
+    private void GunPowerUp()
+    {
+        if (isWeaponized)
+        {
+            isWeaponPowerUp = true;
+            view.StartShooting();
+        }
+    }
+
+    private void GunPowerUpFinished()
+    {
+        isWeaponPowerUp = false;
+    }
+
+    private void StopShooting()
+    {
+        if (isWeaponized)
+        {
+            view.StopShooting();
+            isWeaponPowerUp = false;
         }
     }
 
@@ -54,22 +92,15 @@ public class PlayerController : Element
 
     void FixedUpdate()
     {
-       /* if (isAndroid)
-        {
-            if ((Input.acceleration.x > 0.2 || Input.acceleration.x < -0.2) && !app.controller.fight.IsFighting)
-            {
-                move = Input.acceleration.x * 2f;
-            }
-            else
-            {
-                move = 0;
-            }
-        }
-        else
-        {*/
-            move = CnInputManager.GetAxis("Horizontal");
-        //}
+        if (!isWeaponPowerUp)
+            UpdateMovement();
+        if (model.health == 0)
+            app.controller.game.ReloadLevel();
+    }
 
+    private void UpdateMovement()
+    {
+        move = CnInputManager.GetAxis("Horizontal");
         if (CnInputManager.GetButton("Jump"))
         {
             model.isGrounded = Physics2D.Linecast(view.trS1.position, view.trE1.position, 1 << LayerMask.NameToLayer("Ground"))
@@ -87,15 +118,13 @@ public class PlayerController : Element
         jumpHeight = view.transform.position.y - jumpStartY;
         if (move > 0 && !model.facingRight) Flip();
         else if (move < 0 && model.facingRight) Flip();
-        if (model.health == 0)
-            app.controller.game.ReloadLevel();
     }
 
     public void ChangeHealth(int val)
     {
         model.health = Mathf.Clamp(model.health + val, 0, model.maxHealth);
         app.view.ui.setHealth(model.health);
-       // app.view.amplirude.h = model.health;
+        // app.view.amplirude.h = model.health;
     }
 
     public void Flip()

@@ -10,153 +10,110 @@ public class GunController : Element
     private GunMode[] modes;
     [SerializeField]
     public GunMode currMode;
+    public static event Action OnPowerUp, OnStopShooting;
+    public float gunRotationSpeed, shootingGunRotationSpeed;
+    public bool isShooting;
 
-    private GunView gunView;
-    Gun gun;
+    private GunView view;
+    private Vector3 laserStartPos, touchPos, laserEndPos, gunToTouchDir;
+    readonly private float MIN_ANGLE = -45, MAX_ANGLE = 45;
+    readonly private float LASER_LENGTH = 15;
+    private float laserLength;
     private int currentModeInd;
-    private Vector3 startPos, currPos, endPos, dir;
-    private float timeLeft;
-    float angle;
-    private bool isRotated;
+
 
     void Awake()
     {
-        gunView = app.view.gun;
+        view = app.view.gun;
         SetMode(0);
     }
 
     void Update()
     {
-
-        if ((Input.GetMouseButtonDown(0) || Input.touches.Any(x => x.phase == TouchPhase.Began)) && !app.controller.game.IsPaused)//Отслеживание нажатия на экран 
+        RotateGunToMousePosition();
+        if ((Input.GetMouseButtonDown(0) && currentModeInd != 0 && !IsPointerOverUIObject() && !app.controller.game.IsPaused))
         {
-            //startPos = app.model.gunModel.GunO.transform.position;
-            if(currMode.muzzlePosition!=null)
-            startPos = currMode.muzzlePosition.transform.position;
-            else
-            {
-                startPos = app.model.gunModel.GunO.transform.position;
-            }
-            endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись в переменную pos координат места, где произошло касание экрана.
-            Vector2 dir = (endPos - startPos).normalized;
-            endPos = new Vector3(startPos.x + dir.x * 30, startPos.y + dir.y * 30, endPos.z);
-            if (!IsPointerOverUIObject())
-                drawLaser();
-            if (timeLeft > 0)
-            {
-                timeLeft -= Time.deltaTime;
-                if (timeLeft <= 0)
-                {
-                    rotateGunBack();
-                }
-            }
+            UpdateLaser();
+            RaycastLaser(false);
+            view.StartShooting();
+            OnPowerUp();
+            isShooting = true;
+        }
+        else if (Input.GetMouseButton(0) && isShooting)
+        {
+            UpdateLaser();
+            RaycastLaser(true);
+            view.UpdateShooting();
+        }
+        if (Input.GetMouseButtonUp(0) && isShooting)
+        {
+            view.StopShooting();
+            OnStopShooting();
+            isShooting = false;
         }
     }
 
-    public void drawLaser()
+    private void UpdateLaser()
     {
-        if (app.model.gunModel.CurrentGun == -1 || app.controller.game.IsPaused) return;
-        FlipPlayer();
-        LazerCollide();
-        RotateGun();
-        LazerSetup();
+        Vector3 gunRotation = view.gunObject.transform.right.normalized;
+        if (!app.model.player.facingRight)
+            gunRotation = -gunRotation;
+        laserEndPos = new Vector3(laserStartPos.x + gunRotation.x * laserLength, laserStartPos.y + gunRotation.y * laserLength, -2);
+        view.laserLine.SetPosition(0, laserStartPos);
+        view.laserLine.SetPosition(1, laserEndPos);
     }
 
-    private void LazerCollide()
+    private void RotateGunToMousePosition()
     {
-        RaycastHit2D[] h = Physics2D.LinecastAll(startPos, endPos);
-        Debug.DrawLine(startPos, endPos, Color.red);
-        if (h.Length > 0)
+        touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Запись координат места, где произошло касание экрана.
+        touchPos.z = 0;
+        laserStartPos = view.laserLine.transform.position;
+        gunToTouchDir = touchPos - laserStartPos;
+        if (!app.model.player.facingRight)
+            gunToTouchDir = -gunToTouchDir;
+        float angle = (float)(Math.Atan(gunToTouchDir.y / gunToTouchDir.x) * Mathf.Rad2Deg);
+        if (gunToTouchDir.x < 0) angle = -angle;
+        angle = Mathf.Clamp(angle, MIN_ANGLE, MAX_ANGLE);
+        float speed;
+        if (isShooting)
+            speed = Time.deltaTime * shootingGunRotationSpeed;
+        else
+            speed = Time.deltaTime * gunRotationSpeed;
+        view.gunObject.transform.rotation = Quaternion.Slerp(view.gunObject.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle)), speed);
+    }
+
+    private void RaycastLaser(bool checkCollisions)
+    {
+        laserLength = LASER_LENGTH;
+        RaycastHit2D[] h = Physics2D.RaycastAll(laserStartPos, gunToTouchDir);
+        foreach (RaycastHit2D hit in h)
         {
-            if (h.Length > 1)
+            if (hit.collider.tag == "Rift" || hit.collider.tag == "Ground" || hit.collider.tag == "Enemy")
+            {
+                laserLength = (hit.point - (Vector2)laserStartPos).magnitude;
+                break;
+            }
+        }
+        if (checkCollisions && h.Length > 0)
+        {
+            if (h[0].collider.tag == "Enemy")
+            {
+                app.controller.events.OnCollision(this, h[0].collider.gameObject);
+            }
+            else if (h.Length > 1)
             {
                 if (h[0].collider.tag == "Rift" && !h[1].collider.isTrigger)
                 {
                     app.controller.events.OnCollision(this, h[0].collider.gameObject);
                 }
-                if (h[1].collider.tag == "Ground")
-                {
-                    endPos = h[1].point;
-                }
             }
-            if(h.Length > 2)
-            {
-                if (h[2].collider.tag == "Ground")
-                {
-                    endPos = h[2].point;
-                }
-            }
-            if (h[0].collider.tag == "Enemy")
-            {
-                app.controller.events.OnCollision(this, h[0].collider.gameObject);
-            }
-            if (h[0].collider.tag == "Ground" )
-            {
-                endPos = h[0].point;
-            }
-
         }
-
-    }
-
-    private void LazerSetup()
-    {
-        gun = app.model.gunModel.guns[app.model.gunModel.CurrentGun];
-        GameObject myLine = new GameObject();
-        myLine.transform.position = startPos;
-        myLine.AddComponent<LineRenderer>();
-        myLine.GetComponent<LineRenderer>().sortingOrder = 5;
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.startColor = Color.cyan;
-        lr.endColor = Color.blue;
-        lr.startWidth = gun.startWidth;
-        lr.endWidth = gun.endWidth;
-        lr.SetPosition(0, new Vector3(startPos.x, startPos.y, -5));
-        lr.SetPosition(1, new Vector3(endPos.x, endPos.y, -5));
-        if (!app.controller.player.isAndroid)
-        {
-            lr.material = new Material(Shader.Find("Particles/Additive"));
-            lr.SetColors(Color.yellow, Color.red);
-        }
-        Destroy(myLine, 0.2f);
-    }
-
-    private void RotateGun()//bad work when shoot to up or down direction
-    {
-        rotateGunBack();
-        angle = (float)(Math.Atan((endPos.y - startPos.y) / (endPos.x - startPos.x))) * Mathf.Rad2Deg;
-        if (!app.model.player.facingRight)
-        {
-            angle = -angle;
-        }
-        angle = CornerCompetition(angle);
-        app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, angle));
-        timeLeft = 0.5f;
-        isRotated = true;
-    }
-
-    void rotateGunBack()
-    {
-        if (isRotated)
-        {
-            app.model.gunModel.GunO.transform.Rotate(new Vector3(0, 0, -angle));
-            isRotated = false;
-        }
-    }
-
-    private void FlipPlayer()
-    {   
-        if(app.model.player.facingRight && app.model.player.playerObject.transform.position.x >= endPos.x)
-            app.controller.player.Flip();
-        else if(!app.model.player.facingRight && app.model.player.playerObject.transform.position.x <= endPos.x)
-            app.controller.player.Flip();
-        startPos = app.model.gunModel.GunO.transform.position;
     }
 
     public void SetMode(int currentModeInd)
     {
-        this.currentModeInd = currentModeInd;
         currMode = modes[currentModeInd];
+        this.currentModeInd = currentModeInd;
     }
 
     private bool IsPointerOverUIObject()
@@ -168,24 +125,4 @@ public class GunController : Element
         return results.Count > 0;
     }
 
-    private float CornerCompetition(float angle)
-    {
-        if(startPos.y < endPos.y && angle < 0 && app.model.player.facingRight)
-        {
-            return 90 + (90 + angle);
-        }
-        if(startPos.y > endPos.y && angle > 0 && app.model.player.facingRight)
-        {
-            return -90 - (90 - angle);
-        }
-        if (startPos.y > endPos.y && angle > 0 && !app.model.player.facingRight)
-        {
-            return 90 + (90 + angle);
-        }
-        if (startPos.y < endPos.y && angle < 0 && !app.model.player.facingRight)
-        {
-            return -90 - (90 - angle);
-        }
-        return angle;
-    }
 }

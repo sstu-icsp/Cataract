@@ -17,14 +17,14 @@ public class PitchController : Element
     private bool bFade;
     private enum State { fade_in, play_duration, play_to_pitch, fade_out, idle }
     private State state;
-    private float volume = 1f;// where is it use?
+  //  private float volume = 1f;// where is it use?
 
     void Start()
     {
         pitch = source.pitch;
         if (PlayerPrefs.HasKey("ToggleMusic"))
         {        
-            volume = PlayerPrefs.GetFloat("ToggleMusic");//////??????? don't work
+         //   volume = PlayerPrefs.GetFloat("ToggleMusic");//////??????? don't work
 
 
             /**

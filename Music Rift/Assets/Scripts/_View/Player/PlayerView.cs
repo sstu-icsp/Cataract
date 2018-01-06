@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerView : Element {
@@ -20,6 +21,7 @@ public class PlayerView : Element {
         controller = app.controller.player;
         model = app.model.player;
     }
+
     void Start () {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -44,10 +46,19 @@ public class PlayerView : Element {
     {
         app.controller.events.OnCollision(this, col);
     }
+    public void StartShooting()
+    {
+        animator.SetTrigger("Shoot");
+    }
+
+    public void StopShooting()
+    {
+        animator.SetTrigger("StopShooting");
+    }
 
     public void Die()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        app.controller.game.ReloadLevel();
     }
-
+   
 }
